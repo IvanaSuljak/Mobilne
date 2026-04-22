@@ -19,7 +19,9 @@ public class HomeScreenActivity extends AppCompatActivity {
     private static final int MICROPHONE_PERMISSION_REQUEST = 100;
     
     private TextView welcomeTextView;
-    private Button microphoneButton;
+    private TextView emailValueTextView;
+    private TextView phoneValueTextView;
+    private Button settingsButton;
     private Button logoutButton;
     
     @Override
@@ -30,39 +32,60 @@ public class HomeScreenActivity extends AppCompatActivity {
         
         initViews();
         setupClickListeners();
+        
+        // VEZBA 3: Priimanje i prikaz podataka iz RegisterScreen-a
+        receiveAndDisplayUserData();
     }
     
     private void initViews() {
         welcomeTextView = findViewById(R.id.welcomeTextView);
-        microphoneButton = findViewById(R.id.microphoneButton);
+        emailValueTextView = findViewById(R.id.emailValueTextView);
+        phoneValueTextView = findViewById(R.id.phoneValueTextView);
+        settingsButton = findViewById(R.id.settingsButton);
         logoutButton = findViewById(R.id.logoutButton);
         
-        welcomeTextView.setText("Welcome to Home Screen!");
+        // VEZBA 3: Koristi string resurs za welcome poruku
+        welcomeTextView.setText(getString(R.string.home_welcome));
     }
     
     private void setupClickListeners() {
-        microphoneButton.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) 
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.RECORD_AUDIO},
-                        MICROPHONE_PERMISSION_REQUEST);
-            } else {
-                useMicrophone();
-            }
+        // VEZBA 3: Settings dugme funkcionalnost
+        settingsButton.setOnClickListener(v -> {
+            Log.d(TAG, "Settings clicked");
+            Toast.makeText(this, "Settings opcija - u razvoju", Toast.LENGTH_SHORT).show();
         });
-        
+
         logoutButton.setOnClickListener(v -> {
             Log.d(TAG, "Logout clicked");
             finish();
         });
     }
     
-    private void useMicrophone() {
-        Log.d(TAG, "Microphone permission granted - using microphone");
-        Toast.makeText(this, "Microphone access granted!", Toast.LENGTH_SHORT).show();
+    // VEZBA 3: Metoda za prijem i prikaz podataka iz RegisterScreen-a
+    private void receiveAndDisplayUserData() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            String userName = intent.getStringExtra("USER_NAME");
+            String userEmail = intent.getStringExtra("USER_EMAIL");
+            String userPhone = intent.getStringExtra("USER_PHONE");
+            
+            Log.d(TAG, "Received data - Name: " + userName + ", Email: " + userEmail + ", Phone: " + userPhone);
+            
+            // Prikaz podataka u HomeScreen
+            if (userName != null) {
+                welcomeTextView.setText("Dobrodo\u0161li, " + userName + "!");
+            }
+            if (userEmail != null) {
+                emailValueTextView.setText(userEmail);
+            }
+            if (userPhone != null) {
+                phoneValueTextView.setText(userPhone);
+            }
+        }
     }
     
+    // Ova metoda se automatski aktivira nakon \u0161to korisnik klikne "Allow" ili "Deny" na prozorèi\u0107u za mikrofon.
+    // Ako je korisnik dozvolio (PERMISSION_GRANTED), pokre\u0107e se funkcija useMicrophone().
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

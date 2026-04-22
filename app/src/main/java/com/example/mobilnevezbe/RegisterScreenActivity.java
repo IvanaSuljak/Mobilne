@@ -1,9 +1,11 @@
 package com.example.mobilnevezbe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +14,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private static final String TAG = "RegisterScreenActivity";
     private EditText nameEditText;
     private EditText emailEditText;
+    private EditText phoneEditText; // VEZBA 3: Dodato polje za broj telefona
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
     private Button registerButton;
@@ -29,6 +32,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private void initViews() {
         nameEditText = findViewById(R.id.nameEditText);
         emailEditText = findViewById(R.id.emailEditText);
+        phoneEditText = findViewById(R.id.phoneEditText); // VEZBA 3: Inicijalizacija polja za telefon
         passwordEditText = findViewById(R.id.passwordEditText);
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         registerButton = findViewById(R.id.registerButton);
@@ -38,24 +42,35 @@ public class RegisterScreenActivity extends AppCompatActivity {
         registerButton.setOnClickListener(v -> {
             String name = nameEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
+            String phone = phoneEditText.getText().toString().trim(); // VEZBA 3: Uzimanje broja telefona
             String password = passwordEditText.getText().toString().trim();
             String confirmPassword = confirmPasswordEditText.getText().toString().trim();
             
-            Log.d(TAG, "Registration attempt with name: " + name + ", email: " + email);
+            Log.d(TAG, "Registration attempt with name: " + name + ", email: " + email + ", phone: " + phone);
             
-            // Basic validation
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            // VEZBA 3: Provera svih polja ukljuèujuæi telefon
+            if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
                 Log.d(TAG, "Please fill all fields");
+                Toast.makeText(this, getString(R.string.register_empty_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
             
             if (!password.equals(confirmPassword)) {
                 Log.d(TAG, "Passwords do not match");
+                Toast.makeText(this, getString(R.string.register_password_mismatch), Toast.LENGTH_SHORT).show();
                 return;
             }
             
-            // Registration successful, navigate back to LoginScreen
-            finish();
+            // VEZBA 3: Uspe¹na registracija - prelazak na HomeScreen umesto LoginScreen
+            Toast.makeText(this, getString(R.string.success_registration), Toast.LENGTH_SHORT).show();
+            
+            Intent intent = new Intent(RegisterScreenActivity.this, HomeScreenActivity.class);
+            // Prosleðivanje podataka na HomeScreen
+            intent.putExtra("USER_NAME", name);
+            intent.putExtra("USER_EMAIL", email);
+            intent.putExtra("USER_PHONE", phone);
+            startActivity(intent);
+            finish(); // Zatvara RegisterScreen
         });
     }
     

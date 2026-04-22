@@ -434,3 +434,178 @@ if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
     // 3. Ako imamo, koristimo mikrofon
     useMicrophone();
 }
+
+---
+
+# VEZBA 3 - NOVE FUNKCIONALNOSTI
+
+## \u010cemu slu\u017ee VEZBA 3 zadaci?
+
+VEZBA 3 uvodi naprednije koncepte Android razvoja:
+- **Relativni raspored** - kori\u0161\u0107enje ConstraintLayout za kompleksnije layout-e
+- **InputType optimizacija** - prilago\u0111avanje tastature za tip unosa
+- **Prenos podataka** - slanje podataka izme\u0111u aktivnosti
+- **String resursi** - internacionalizacija i odr\u017eavanje koda
+
+## 1. REGISTERSCREEN - DODAT POLJE ZA TELEFON
+
+### \u0160ta je dodato?
+```xml
+<!-- VEZBA 3: Dodato polje za broj telefona -->
+<EditText
+    android:id="@+id/phoneEditText"
+    android:hint="@string/register_phone_hint"
+    android:inputType="phone" />
+```
+
+### Za\u0161to `inputType="phone"`?
+- **Optimizovana tastatura** - prikazuje brojeve i simbole za telefon
+- **Automatsko formatiranje** - mo\u017ee da formatira broj telefona
+- **Bolje korisni\u010dko iskustvo** - korisnik odmah vidi da treba da unese broj
+
+### Java promene:
+```java
+// VEZBA 3: Dodato polje za broj telefona
+private EditText phoneEditText;
+
+// U initViews():
+phoneEditText = findViewById(R.id.phoneEditText);
+
+// U validaciji:
+String phone = phoneEditText.getText().toString().trim();
+if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+    // Provera svih polja uklju\u010duju\u0107i telefon
+}
+```
+
+## 2. LOGINSCREEN - PRILAGO\u0110EN INPUTTYPE
+
+### \u0160ta je promenjeno?
+```xml
+<EditText
+    android:inputType="textEmailAddress" />  <!-- VEZBA 3: Email tastatura -->
+    
+<EditText
+    android:inputType="textPassword" />     <!-- VEZBA 3: Sakriva tekst -->
+```
+
+### InputType opcije:
+- `textEmailAddress` - prikazuje @ tastaturu, optimizovano za email
+- `textPassword` - sakriva unos (****), automatski prelazi na slede\u0107e polje
+- `textPersonName` - optimizovano za imena (prvo slovo veliko)
+- `phone` - numeri\u010dka tastatura sa formatiranjem
+
+## 3. HOMESCREEN - CONSTRAINTLAYOUT RASPORED
+
+### \u0160ta je novo?
+Kompletno redizajniran layout sa **ConstraintLayout**:
+
+```xml
+<!-- VEZBA 3: Welcome poruka na vrhu -->
+<TextView
+    android:id="@+id/welcomeTextView"
+    android:background="@android:color/holo_blue_light"
+    android:textColor="@android:color/white" />
+
+<!-- VEZBA 3: Sekcija za informacije o profilu -->
+<TextView
+    android:id="@+id/profileInfoTextView"
+    android:background="@android:color/holo_orange_light" />
+
+<!-- VEZBA 3: Email i Phone prikaz -->
+<TextView android:id="@+id/emailValueTextView" />
+<TextView android:id="@+id/phoneValueTextView" />
+
+<!-- VEZBA 3: Settings i Logout dugmi\u0107i -->
+<Button android:id="@+id/settingsButton" />
+<Button android:id="@+id/logoutButton" />
+```
+
+### ConstraintLayout lanac:
+- **Vertikalni lanac** - svi elementi su povezani
+- **Responsive dizajn** - prilago\u0111ava se razli\u010ditim ekranima
+- **Pozicioniranje** - svaki element je vezan za prethodni i slede\u0107i
+
+## 4. PRENOS PODATAKA IZ REGISTERSCREEN U HOMESCREEN
+
+### Kako radi?
+```java
+// RegisterScreen - slanje podataka
+Intent intent = new Intent(RegisterScreenActivity.this, HomeScreenActivity.class);
+intent.putExtra("USER_NAME", name);
+intent.putExtra("USER_EMAIL", email);
+intent.putExtra("USER_PHONE", phone);
+startActivity(intent);
+
+// HomeScreen - prijem podataka
+private void receiveAndDisplayUserData() {
+    Intent intent = getIntent();
+    String userName = intent.getStringExtra("USER_NAME");
+    String userEmail = intent.getStringExtra("USER_EMAIL");
+    String userPhone = intent.getStringExtra("USER_PHONE");
+    
+    // Prikaz podataka
+    welcomeTextView.setText("Dobrodo\u0161li, " + userName + "!");
+    emailValueTextView.setText(userEmail);
+    phoneValueTextView.setText(userPhone);
+}
+```
+
+### Za\u0161to `Intent.putExtra()`?
+- **Prenos podataka** - \u010duva stanje izme\u0111u aktivnosti
+- **Tipovi podataka** - mo\u017ee da prenese String, int, boolean, objekte
+- **Klju\u010d-vrednost** - svaki podatak ima jedinstveni klju\u010d
+
+## 5. STRING RESURSI - INTERNACIONALIZACIJA
+
+### \u0160ta je strings.xml?
+```xml
+<!-- VEZBA 3 - String resursi za sve tekstove -->
+<string name="register_title">Registracija</string>
+<string name="register_email_hint">Email</string>
+<string name="register_phone_hint">Broj telefona</string>
+<string name="home_welcome">Dobrodo\u0161li na po\u010detnu stranicu!</string>
+```
+
+### Kori\u0161\u0107enje u XML:
+```xml
+<TextView android:text="@string/register_title" />
+<EditText android:hint="@string/register_email_hint" />
+```
+
+### Kori\u0161\u0107enje u Java:
+```java
+welcomeTextView.setText(getString(R.string.home_welcome));
+Toast.makeText(this, getString(R.string.success_registration), Toast.LENGTH_SHORT).show();
+```
+
+### Prednosti string resursa:
+1. **Odr\u017eavanje** - svi tekstovi na jednom mestu
+2. **Internacionalizacija** - lako prevo\u0111enje na druge jezike
+3. **Konsistentnost** - isti tekst se koristi na vi\u0161e mesta
+4. **Tip bezbednosti** - kompajler proverava postojanje resursa
+
+## 6. NAVIGACIJA TOKOM APLIKACIJE
+
+### VEZBA 3 tok:
+```
+SplashScreen (5s) 
+    \u2192 LoginScreen 
+        \u2192 RegisterScreen 
+            \u2192 HomeScreen (sa podacima)
+```
+
+### Promene u navigaciji:
+- **RegisterScreen \u2192 HomeScreen** - umesto povratka na LoginScreen
+- **Prenos podataka** - korisni\u010dki podaci se prenose na HomeScreen
+- **Personalizacija** - HomeScreen prikazuje ime i podatke korisnika
+
+---
+
+**VEZBA 3 je kompletna!** Aplikacija sada ima:
+- \u2713 Relativni raspored sa ConstraintLayout
+- \u2713 Optimizovane inputType za sve polja
+- \u2713 Prenos podataka izme\u0111u aktivnosti
+- \u2713 Sve tekstove u string resursima
+- \u2713 Personalizovani HomeScreen
+- \u2713 Profesionalan UI sa bojama i stilovima

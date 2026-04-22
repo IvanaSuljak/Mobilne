@@ -1,4 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mobilne Vezbe</string>
+    
+    <!-- VEZBA 3 - String resursi za sve tekstove -->
+    
+    <!-- SplashScreen -->
+    <string name="splash_welcome">Dobrodo\u0161li!</string>
+    <string name="splash_subtitle">Aplikacija za demonstraciju</string>
+    
+    <!-- LoginScreen -->
+    <string name="login_title">Prijava</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Lozinka</string>
+    <string name="login_button">Prijavi se</string>
+    <string name="register_button">Registruj se</string>
+    <string name="login_empty_fields">Molimo popunite sva polja</string>
+    
+    <!-- RegisterScreen - VEZBA 3: Dodati polja za telefon -->
+    <string name="register_title">Registracija</string>
+    <string name="register_name_hint">Ime i prezime</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_phone_hint">Broj telefona</string>
+    <string name="register_password_hint">Lozinka</string>
+    <string name="register_confirm_password_hint">Potvrdi lozinku</string>
+    <string name="register_button_text">Registruj se</string>
+    <string name="register_empty_fields">Molimo popunite sva polja</string>
+    <string name="register_password_mismatch">Lozinke se ne poklapaju</string>
+    
+    <!-- HomeScreen - VEZBA 3: ConstraintLayout raspored -->
+    <string name="home_welcome">Dobrodo\u0161li na po\u010detnu stranicu!</string>
+    <string name="home_profile_info">Informacije o profilu</string>
+    <string name="home_email_label">Email:</string>
+    <string name="home_phone_label">Telefon:</string>
+    <string name="home_logout_button">Odjavi se</string>
+    <string name="home_settings_button">Pode\u0161avanja</string>
+    
+    <!-- Op\u0161te poruke -->
+    <string name="error_empty_field">Ovo polje je obavezno</string>
+    <string name="success_registration">Uspe\u0161na registracija!</string>
+    <string name="success_login">Uspe\u0161na prijava!</string>
 </resources>

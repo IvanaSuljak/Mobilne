@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- VEZBA 3: Novi HomeScreen sa ConstraintLayout rasporedom -->
 <androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,48 +9,127 @@
     android:padding="24dp"
     tools:context=".HomeScreenActivity">
 
+    <!-- VEZBA 3: Welcome poruka na vrhu -->
     <TextView
         android:id="@+id/welcomeTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Welcome!"
-        android:textSize="28sp"
+        android:text="@string/home_welcome"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/microphoneButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/holo_blue_light"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profileInfoTextView" />
 
-    <Button
-        android:id="@+id/microphoneButton"
+    <!-- VEZBA 3: Sekcija za informacije o profilu -->
+    <TextView
+        android:id="@+id/profileInfoTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@string/home_profile_info"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@android:color/holo_orange_light"
+        android:padding="12dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/emailLabelTextView" />
+
+    <!-- VEZBA 3: Email label -->
+    <TextView
+        android:id="@+id/emailLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/home_email_label"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/profileInfoTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/emailValueTextView" />
+
+    <!-- VEZBA 3: Email vrednost -->
+    <TextView
+        android:id="@+id/emailValueTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Use Microphone"
-        android:padding="16dp"
-        android:drawableStart="@android:drawable/ic_btn_speak_now"
-        android:drawablePadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="user@example.com"
+        android:textSize="16sp"
+        android:background="@android:color/background_light"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabelTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/phoneLabelTextView" />
+
+    <!-- VEZBA 3: Phone label -->
+    <TextView
+        android:id="@+id/phoneLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/home_phone_label"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/emailValueTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/phoneValueTextView" />
+
+    <!-- VEZBA 3: Phone vrednost -->
+    <TextView
+        android:id="@+id/phoneValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="+381 60 123 456"
+        android:textSize="16sp"
+        android:background="@android:color/background_light"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/phoneLabelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/settingsButton" />
+
+    <!-- VEZBA 3: Settings dugme -->
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/home_settings_button"
+        android:padding="16dp"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/phoneValueTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintWidth_max="300dp" />
 
+    <!-- VEZBA 3: Logout dugme -->
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Logout"
+        android:text="@string/home_logout_button"
         android:padding="16dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/settingsButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/microphoneButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_max="300dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
