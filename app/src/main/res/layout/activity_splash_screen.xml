@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android" /*link ka rečniku Android komandi*/
+    xmlns:app="http://schemas.android.com/apk/res-auto" /*za korišćenje naprednih funkcija koje ne spadaju u osnovni Android*/
+    xmlns:tools="http://schemas.android.com/tools" /*za pomoćne alate kao što su "tools:context"*/
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2196F3"
+    tools:context=".SplashScreenActivity">
+
+    <TextView
+        android:id="@+id/splashTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobilne Aplikacije"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Vežbe 2 - Aktivnosti i Fragmenti"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splashTextView" />  /* Gornja ivica ovog podnaslova treba da bude zakačena za donju ivicu glavnog naslova*/
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+/* samo prikazuje tekst i podtekst */

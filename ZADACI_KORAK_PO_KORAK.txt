@@ -1,0 +1,202 @@
+VEZBE 2 - ZADACI KORAK PO KORAK
+=================================
+
+ZADATAK 1: KREIRATI PROJEKAT KORISTE\u0106I ANDROID STUDIO
+-------------------------------------------------------
+1.1. Pokreni Android Studio
+1.2. File > New > New Project
+1.3. Izaberi "Empty Views Activity"
+1.4. Konfiguri\u0161i projekat:
+    - Name: Mobilne Vezbe
+    - Package name: com.example.mobilnevezbe
+    - Language: Java
+    - Minimum SDK: API 30: Android 11.0 (R)
+    - Ovo odgovara fizi\u010dkom/virtuelnom ure\u0111aju
+1.5. Finish
+
+ZADATAK 2: KREIRATI SLEDE\u0106E EKRANE
+------------------------------------
+2A. SPLASHSCREEN EKRAN
+2A.1. Desni klik na java/com.example.mobilnevezbe > New > Java Class
+2A.2. Naziv: SplashScreenActivity
+2A.3. Dodaj "extends AppCompatActivity"
+2A.4. Desni klik na res/layout > New > Layout Resource File
+2A.5. Naziv: activity_splash_screen.xml
+2A.6. Root element: androidx.constraintlayout.widget.ConstraintLayout
+
+2B. LOGINSCREEN EKRAN
+2B.1. New > Java Class > LoginScreenActivity
+2B.2. extends AppCompatActivity
+2B.3. New > Layout Resource File > activity_login_screen.xml
+2B.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+
+2C. REGISTERSCREEN EKRAN
+2C.1. New > Java Class > RegisterScreenActivity
+2C.2. extends AppCompatActivity
+2C.3. New > Layout Resource File > activity_register_screen.xml
+2C.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+
+2D. HOMESCREEN EKRAN
+2D.1. New > Java Class > HomeScreenActivity
+2D.2. extends AppCompatActivity
+2D.3. New > Layout Resource File > activity_home_screen.xml
+2D.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+
+ZADATAK 3: DODATI ELEMENTE U ANDROIDMANIFEST.XML
+------------------------------------------------
+3.1. Otvori AndroidManifest.xml
+3.2. Dodaj permisije iznad <application> taga:
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+3.3. Unutar <application> taga dodaj sve 4 aktivnosti:
+    <activity android:name=".SplashScreenActivity" android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity android:name=".LoginScreen" />
+    <activity android:name=".RegisterScreen" />
+    <activity android:name=".HomeScreen" />
+
+ZADATAK 4: NASLEDJIVANJE APPCOMPATACTIVITY I REDEFINISANJE METODA
+------------------------------------------------------------------
+4.1. U SVAKOJ aktivnosti (4 puta) dodaj ove metode:
+    - onCreate (vec postoji, samo dodaj Log.d)
+    - onStart
+    - onRestart
+    - onResume
+    - onPause
+    - onStop
+    - onDestroy
+
+4.2. Primer za SplashScreenActivity:
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+        Log.d("SplashScreenActivity", "onCreate called");
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("SplashScreenActivity", "onStart called");
+    }
+    
+    // ... i tako za sve metode
+
+4.3. Ovo ponovi za LoginScreenActivity, RegisterScreenActivity, HomeScreenActivity
+
+ZADATAK 5: PREBACIVANJE SA SPLASHSCREEN NA LOGINSCREEN NAKON 5 SEKUNDI
+--------------------------------------------------------------------
+5.1. U SplashScreenActivity onCreate metodu dodaj:
+    new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = new Intent(SplashScreenActivity.this, LoginScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }, 5000);
+
+ZADATAK 6: LOGINSCREEN SA POLJIMA I DUGMICIMA
+--------------------------------------------
+6.1. U activity_login_screen.xml dodaj:
+    - EditText za email (android:id="@+id/emailEditText")
+    - EditText za lozinku (android:id="@+id/passwordEditText")
+    - Button za potvrdu (android:id="@+id/loginButton")
+    - Button za registraciju (android:id="@+id/registerButton")
+
+6.2. U LoginScreenActivity onCreate metodu dodaj:
+    EditText emailEditText = findViewById(R.id.emailEditText);
+    EditText passwordEditText = findViewById(R.id.passwordEditText);
+    Button loginButton = findViewById(R.id.loginButton);
+    Button registerButton = findViewById(R.id.registerButton);
+
+ZADATAK 7: PRELAZ SA LOGINSCREEN NA REGISTERSCREEN
+-------------------------------------------------
+7.1. U LoginScreenActivity dodaj listener za registerButton:
+    registerButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginScreenActivity.this, RegisterScreenActivity.class);
+            startActivity(intent);
+        }
+    });
+
+ZADATAK 8: PRELAZ SA LOGINSCREEN NA HOMESCREEN
+-----------------------------------------------
+8.1. U LoginScreenActivity dodaj listener za loginButton:
+    loginButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginScreenActivity.this, HomeScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    });
+
+ZADATAK 9: DODATI PERMISIJE ZA KORI\u0160\u0106ENJE INTERNETA I MIKROFONA
+------------------------------------------------------------------
+9.1. INTERNET PERMISIJA (STATI\u010cKA):
+    - Ve\u0107 dodata u AndroidManifest.xml (zadatak 3)
+
+9.2. MIKROFON PERMISIJA (DINAMI\u010cKA):
+9.2.1. U HomeScreenActivity onCreate metodu dodaj:
+    Button microphoneButton = findViewById(R.id.microphoneButton);
+    microphoneButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (ContextCompat.checkSelfPermission(HomeScreenActivity.this, 
+                    Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(HomeScreenActivity.this,
+                        new String[]{Manifest.permission.RECORD_AUDIO}, 100);
+            } else {
+                Toast.makeText(HomeScreenActivity.this, "Mikrofon dozvoljen!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    });
+
+9.2.2. Dodaj onRequestPermissionsResult metodu:
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Mikrofon dozvoljen!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Mikrofon odbijen!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+DODATNO: POTREBNI IMPORTI U SVAKOM FAJLU
+---------------------------------------
+Za svaki Java fajl dodati odgovaraju\u0107i importi:
+- android.content.Intent
+- android.os.Bundle
+- android.util.Log
+- android.view.View
+- android.widget.Button
+- android.widget.EditText
+- android.widget.Toast
+- androidx.appcompat.app.AppCompatActivity
+- androidx.core.app.ActivityCompat
+- androidx.core.content.ContextCompat
+- android.Manifest
+- android.content.pm.PackageManager
+- android.annotation.NonNull
+
+TESTIRANJE: POKRENI APLIKACIJU I PROVERI SVE FUNKCIONALNOSTI
+---------------------------------------------------------
+1. Splash screen se prikazuje 5 sekundi
+2. Nakon 5 sekundi prelazi na LoginScreen
+3. LoginScreen ima email/password polja i 2 dugmeta
+4. Register dugme vodi na RegisterScreen
+5. Login dugme vodi na HomeScreen
+6. HomeScreen ima dugme za mikrofon (tra\u017ei permisiju)
+7. Sve aktivnosti loguju lifecycle metode (vidi u Logcat)
+
+KRAJ ZADATKA - SVE JE IMPLEMENTIRANO PREMA UPUTSTVU!

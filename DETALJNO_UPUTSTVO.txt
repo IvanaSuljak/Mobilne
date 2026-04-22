@@ -1,0 +1,828 @@
+DETALJNO ANDROID STUDIO UPUTSTVO - VEZBE 2
+==========================================
+
+1. OTVARANJE ANDROID STUDIA I KREIRANJE PROJEKTA
+-----------------------------------------------
+1.1. Pokreni Android Studio
+1.2. Na pochetnom ekranu izaberi "New Project"
+1.3. U novom prozoru izaberi "Empty Views Activity"
+1.4. Popuni polja:
+    - Name: Mobilne Vezbe
+    - Package name: com.example.mobilnevezbe
+    - Save location: ostavi podrazumevano
+    - Language: Java
+    - Minimum SDK: API 30: Android 11.0 (R)
+    - Build configuration language: Groovy DSL
+1.5. Klikni "Finish"
+1.6. Sacekaj da se projekat ucita (moze potrajati 1-2 minuta)
+
+2. KREIRANJE PRVE AKTIVNOSTI - SPLASHSCREENACTIVITY
+----------------------------------------------------
+2.1. U levom panelu pronadji folder: app > src > main > java > com.example.mobilnevezbe
+2.2. Desni klik na folder "com.example.mobilnevezbe"
+2.3. Izaberi New > Java Class
+2.4. U polje "Name" upisi: SplashScreenActivity
+2.5. Klikni "Enter"
+2.6. U otvorenom fajlu izbrisi sav postojeci kod i upisi:
+
+package com.example.mobilnevezbe;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SplashScreenActivity extends AppCompatActivity {
+    
+    private static final String TAG = "SplashScreenActivity";
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+        Log.d(TAG, "onCreate called");
+        
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, LoginScreenActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 5000);
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart called");
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+3. KREIRANJE LAYOUT-A ZA SPLASHSCREEN
+------------------------------------
+3.1. U levom panelu pronadji folder: app > src > main > res > layout
+3.2. Desni klik na folder "layout"
+3.3. Izaberi New > Layout Resource File
+3.4. U polje "File name" upisi: activity_splash_screen
+3.5. U polje "Root element" upisi: androidx.constraintlayout.widget.ConstraintLayout
+3.6. Klikni "OK"
+3.7. U otvorenom XML fajlu izbrisi sav kod i upisi:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2196F3"
+    tools:context=".SplashScreenActivity">
+
+    <TextView
+        android:id="@+id/splashTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobilne Aplikacije"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ve\u017ebe 2 - Aktivnosti i Fragmenti"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splashTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+4. KREIRANJE LOGINSCREENACTIVITY
+---------------------------------
+4.1. Desni klik na folder "com.example.mobilnevezbe"
+4.2. New > Java Class
+4.3. Name: LoginScreenActivity
+4.4. Upisi ceo kod:
+
+package com.example.mobilnevezbe;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LoginScreenActivity extends AppCompatActivity {
+    
+    private static final String TAG = "LoginScreenActivity";
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private Button registerButton;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login_screen);
+        Log.d(TAG, "onCreate called");
+        
+        initViews();
+        setupClickListeners();
+    }
+    
+    private void initViews() {
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
+    }
+    
+    private void setupClickListeners() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                
+                Log.d(TAG, "Login attempt with email: " + email);
+                
+                Intent intent = new Intent(LoginScreenActivity.this, HomeScreenActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Navigate to RegisterScreen");
+                Intent intent = new Intent(LoginScreenActivity.this, RegisterScreenActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart called");
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+5. KREIRANJE LAYOUT-A ZA LOGINSCREEN
+------------------------------------
+5.1. Desni klik na folder "layout"
+5.2. New > Layout Resource File
+5.3. File name: activity_login_screen
+5.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+5.5. Upisi kod:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".LoginScreenActivity">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Login"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintWidth_max="400dp" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Login"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Register"
+        android:padding="16dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintWidth_max="400dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+6. KREIRANJE REGISTERSCREENACTIVITY
+----------------------------------
+6.1. Desni klik na folder "com.example.mobilnevezbe"
+6.2. New > Java Class
+6.3. Name: RegisterScreenActivity
+6.4. Upisi kod:
+
+package com.example.mobilnevezbe;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class RegisterScreenActivity extends AppCompatActivity {
+    
+    private static final String TAG = "RegisterScreenActivity";
+    private EditText nameEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
+    private Button registerButton;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register_screen);
+        Log.d(TAG, "onCreate called");
+        
+        initViews();
+        setupClickListeners();
+    }
+    
+    private void initViews() {
+        nameEditText = findViewById(R.id.nameEditText);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
+        registerButton = findViewById(R.id.registerButton);
+    }
+    
+    private void setupClickListeners() {
+        registerButton.setOnClickListener(v -> {
+            String name = nameEditText.getText().toString().trim();
+            String email = emailEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+            String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+            
+            Log.d(TAG, "Registration attempt with name: " + name + ", email: " + email);
+            
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                Log.d(TAG, "Please fill all fields");
+                return;
+            }
+            
+            if (!password.equals(confirmPassword)) {
+                Log.d(TAG, "Passwords do not match");
+                return;
+            }
+            
+            finish();
+        });
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart called");
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+7. KREIRANJE LAYOUT-A ZA REGISTERSCREEN
+---------------------------------------
+7.1. Desni klik na folder "layout"
+7.2. New > Layout Resource File
+7.3. File name: activity_register_screen
+7.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+7.5. Upisi kod:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".RegisterScreenActivity">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Register"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintWidth_max="400dp" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPasswordEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+    <EditText
+        android:id="@+id/confirmPasswordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Register"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText"
+        app:layout_constraintWidth_max="400dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+8. KREIRANJE HOMESCREENACTIVITY
+-------------------------------
+8.1. Desni klik na folder "com.example.mobilnevezbe"
+8.2. New > Java Class
+8.3. Name: HomeScreenActivity
+8.4. Upisi kod:
+
+package com.example.mobilnevezbe;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class HomeScreenActivity extends AppCompatActivity {
+    
+    private static final String TAG = "HomeScreenActivity";
+    private static final int MICROPHONE_PERMISSION_REQUEST = 100;
+    
+    private TextView welcomeTextView;
+    private Button microphoneButton;
+    private Button logoutButton;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_screen);
+        Log.d(TAG, "onCreate called");
+        
+        initViews();
+        setupClickListeners();
+    }
+    
+    private void initViews() {
+        welcomeTextView = findViewById(R.id.welcomeTextView);
+        microphoneButton = findViewById(R.id.microphoneButton);
+        logoutButton = findViewById(R.id.logoutButton);
+        
+        welcomeTextView.setText("Welcome to Home Screen!");
+    }
+    
+    private void setupClickListeners() {
+        microphoneButton.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) 
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        MICROPHONE_PERMISSION_REQUEST);
+            } else {
+                useMicrophone();
+            }
+        });
+        
+        logoutButton.setOnClickListener(v -> {
+            Log.d(TAG, "Logout clicked");
+            finish();
+        });
+    }
+    
+    private void useMicrophone() {
+        Log.d(TAG, "Microphone permission granted - using microphone");
+        Toast.makeText(this, "Microphone access granted!", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        
+        if (requestCode == MICROPHONE_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                useMicrophone();
+            } else {
+                Log.d(TAG, "Microphone permission denied");
+                Toast.makeText(this, "Microphone permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart called");
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+9. KREIRANJE LAYOUT-A ZA HOMESCREEN
+----------------------------------
+9.1. Desni klik na folder "layout"
+9.2. New > Layout Resource File
+9.3. File name: activity_home_screen
+9.4. Root element: androidx.constraintlayout.widget.ConstraintLayout
+9.5. Upisi kod:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".HomeScreenActivity">
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Welcome!"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/microphoneButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/microphoneButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Use Microphone"
+        android:padding="16dp"
+        android:drawableStart="@android:drawable/ic_btn_speak_now"
+        android:drawablePadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        app:layout_constraintWidth_max="300dp" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Logout"
+        android:padding="16dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/microphoneButton"
+        app:layout_constraintWidth_max="300dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+10. PODESAVANJE ANDROIDMANIFEST.XML
+----------------------------------
+10.1. U levom panelu pronadji folder: app > src > main
+10.2. Otvori fajl AndroidManifest.xml
+10.3. Zameni ceo sadrzaj sa:
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mobilnevezbe">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".LoginScreenActivity"
+            android:exported="false" />
+        
+        <activity
+            android:name=".RegisterScreenActivity"
+            android:exported="false" />
+        
+        <activity
+            android:name=".HomeScreenActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
+
+11. DODAVANJE RESURSA (STRINGOVI, BOJE, STILOVI)
+-------------------------------------------------
+11.1. Desni klik na folder "res/values"
+11.2. New > Values Resource File
+11.3. File name: strings
+11.4. Upisi:
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobilne Vezbe</string>
+</resources>
+
+11.5. Ponovo desni klik na "res/values"
+11.6. New > Values Resource File
+11.7. File name: colors
+11.8. Upisi:
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>
+
+11.7. Ponovo desni klik na "res/values"
+11.8. New > Values Resource File
+11.9. File name: styles
+11.10. Upisi:
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+</resources>
+
+12. POKRETANJE APLIKACIJE
+-------------------------
+12.1. Povezi telefon sa USB kablom i ukljuci "USB debugging"
+    ILI
+    Tools > AVD Manager > Create Virtual Device > izaberi telefon > Next > izaberi Android verziju > Finish
+12.2. U gornjem meniu izaberi svoj ure\u0111aj (pored "Run" dugmeta)
+12.3. Klikni zeleno "Run" dugme (troje)
+12.4. Sa\u010dekaj da se aplikacija kompajlira i instalira
+12.5. Aplikacija \u0107e se pokrenuti na telefonu/emulatoru
+
+13. TESTIRANJE I LOGOVANJE
+-------------------------
+13.1. U Android Studiju otvori "Logcat" tab (dole)
+13.2. U filter polje upisi naziv aktivnosti (npr: "SplashScreenActivity")
+13.3. prati logove kroz aplikaciju
+13.4. Testiraj sve funkcionalnosti:
+    - Splash screen (5 sekundi)
+    - Login dugme (ide na HomeScreen)
+    - Register dugme (ide na RegisterScreen)
+    - Mikrofon permisija (zahteva dozvolu)
+    - Logout dugme (vra\u0107a na LoginScreen)
+
+KRAJ - APLIKACIJA JE SPREMNA!
