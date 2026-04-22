@@ -103,7 +103,126 @@ private void setupClickListeners() {
 - `EditText` za password (`android:inputType="textPassword"`)
 - `Button` za login i register akcije
 
-## 3. HOME SCREEN IMPLEMENTACIJA
+## 3. REGISTER SCREEN IMPLEMENTACIJA
+
+### Fajl: `RegisterScreenActivity.java`
+
+**Logika rada:**
+- Prikazuje formu za registraciju korisnika
+- Polja: ime, email, password, confirm password
+- Validacija unosa pre registracije
+- Nakon registracije vra na LoginScreen
+- Loguje sve lifecycle metode
+
+**Kljuèni kod:**
+```java
+// Deklaracija svih polja za registraciju
+private EditText nameEditText;
+private EditText emailEditText;
+private EditText passwordEditText;
+private EditText confirmPasswordEditText;
+private Button registerButton;
+
+// Inicijalizacija view-ova
+private void initViews() {
+    nameEditText = findViewById(R.id.nameEditText);
+    emailEditText = findViewById(R.id.emailEditText);
+    passwordEditText = findViewById(R.id.passwordEditText);
+    confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
+    registerButton = findViewById(R.id.registerButton);
+}
+```
+
+**Validacija registracije:**
+```java
+private void setupClickListeners() {
+    registerButton.setOnClickListener(v -> {
+        // Uzimanje teksta iz svih polja
+        String name = nameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+        
+        // 1. Provera da li su sva polja popunjena
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Log.d(TAG, "Please fill all fields");
+            return; // Prekida dalje izvravanje
+        }
+        
+        // 2. Provera da li se password-i poklapaju
+        if (!password.equals(confirmPassword)) {
+            Log.d(TAG, "Passwords do not match");
+            return; // Prekida dalje izvravanje
+        }
+        
+        // 3. Ako sve proðe, vrati se na LoginScreen
+        finish(); // Zatvara RegisterScreen i vraa se na prethodni (LoginScreen)
+    });
+}
+```
+
+**Za¹to `finish()` umesto `startActivity`?**
+- `finish()` zatvara trenutnu aktivnost i vraæa se na prethodnu
+- Korisnik se vraæa na LoginScreen nakon uspe¹ne registracije
+- Ne kreiramo novi LoginScreen, veæ se vraæamo na postojeæi
+- Èuva se back stack - korisnik moæe da se vrati nazad
+
+**Validacija - za¹to je vaæna?**
+1. **Praæena polja** - spreèava slanje praznih podataka
+2. **Poklapanje lozinki** - osigurava da korisnik nije pogre¹io unos
+3. **Trim()** - uklanja suvi¹ne razmake sa poèetka i kraja
+
+### Layout: `activity_register_screen.xml`
+
+**Struktura:**
+- `ConstraintLayout` za vertikalno centriranje
+- `TextView` za naslov "Register"
+- 4 `EditText` polja za unos podataka
+- `Button` za registraciju
+
+**Detalji polja:**
+```xml
+<!-- Polje za ime -->
+<EditText
+    android:id="@+id/nameEditText"
+    android:hint="Full Name"
+    android:inputType="textPersonName" />
+
+<!-- Polje za email -->
+<EditText
+    android:id="@+id/emailEditText"
+    android:hint="Email"
+    android:inputType="textEmailAddress" />
+
+<!-- Polje za lozinku -->
+<EditText
+    android:id="@+id/passwordEditText"
+    android:hint="Password"
+    android:inputType="textPassword" />
+
+<!-- Polje za potvrdu lozinke -->
+<EditText
+    android:id="@+id/confirmPasswordEditText"
+    android:hint="Confirm Password"
+    android:inputType="textPassword" />
+```
+
+**InputType obja¹njenje:**
+- `textPersonName` - optimizovano tastaturo za imena
+- `textEmailAddress` - prikazuje @ tastaturu
+- `textPassword` - sakriva tekst (prikazuje ****)
+
+**ConstraintLayout lanac (chain):**
+- Svi elementi su u vertikalnom lancu (`app:layout_constraintVertical_chainStyle="packed"`)
+- Svaki element je vezan za prethodni i sledeæi
+- Omoguæava responsive dizajn - prilagoðava se razlièitim ekranima
+
+**Styling:**
+- `android:padding="16dp"` - unutra¹nji razmak
+- `app:layout_constraintWidth_max="400dp"` - maksimalna ¹irina
+- `android:layout_marginBottom="16dp"` - razmak izmeðu elemenata
+
+## 4. HOME SCREEN IMPLEMENTACIJA
 
 ### Fajl: `HomeScreen.java`
 
@@ -300,3 +419,18 @@ Implementirali smo potpuno funkcionalnu Android aplikaciju sa:
 - ✅ Error handling
 
 Svi komponenti su povezani i funkcionišu kao jedinstvena aplikacija. Kod prati Android best practice i spreman je za produkciju.
+
+Permisije u Androidu su dozvole koje korisnik daje aplikaciji da pristupi određenim resursima ili funkcijama telefona.
+Kako radi u nasoj aplikaciji
+// 1. Provera da li imamo dozvolu
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+        != PackageManager.PERMISSION_GRANTED) {
+    
+    // 2. Ako nemamo, tražimo od korisnika
+    ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.RECORD_AUDIO},
+            MICROPHONE_PERMISSION_REQUEST);
+} else {
+    // 3. Ako imamo, koristimo mikrofon
+    useMicrophone();
+}
