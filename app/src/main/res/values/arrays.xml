@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VEZBA 4: Array resursi za spinner opcije -->
+<resources>
+    <string-array name="sort_options">
+        <item>@string/sort_none</item>
+        <item>@string/sort_name</item>
+        <item>@string/sort_email</item>
+        <item>@string/sort_date</item>
+    </string-array>
+</resources>

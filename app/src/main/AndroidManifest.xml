@@ -37,6 +37,11 @@
         <activity
             android:name=".HomeScreenActivity"
             android:exported="false" />
+        
+        <!-- VEZBA 4: User Screen Activity -->
+        <activity
+            android:name=".UserScreenActivity"
+            android:exported="false" />
 
     </application>
 

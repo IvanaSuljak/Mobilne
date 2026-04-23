@@ -39,4 +39,36 @@
     <string name="error_empty_field">Ovo polje je obavezno</string>
     <string name="success_registration">Uspe\u0161na registracija!</string>
     <string name="success_login">Uspe\u0161na prijava!</string>
+    
+    <!-- VEZBA 4 - UserScreen i navigacija -->
+    <string name="user_screen_title">Korisnici</string>
+    <string name="sort_users">Sortiraj korisnike:</string>
+    <string name="filter_users">Filtriraj korisnike:</string>
+    <string name="filter_hint">Unesite tekst za filtriranje</string>
+    <string name="filter_button">Filtriraj</string>
+    <string name="clear_filter">Ukloni filter</string>
+    <string name="total_users">Ukupno korisnika: %d</string>
+    <string name="users_found">Pronađeno %d korisnika</string>
+    <string name="filter_removed">Filter uklonjen</string>
+    <string name="list_refreshed">Lista osvežena</string>
+    <string name="all_users_deleted">Svi korisnici obrisani</string>
+    <string name="enter_filter_text">Unesite tekst za filtriranje</string>
+    
+    <!-- VEZBA 4 - Sort opcije -->
+    <string name="sort_none">Bez sortiranja</string>
+    <string name="sort_name">Po imenu</string>
+    <string name="sort_email">Po email-u</string>
+    <string name="sort_date">Po datumu registracije</string>
+    
+    <!-- VEZBA 4 - Login provere -->
+    <string name="login_failed">Pogrešan email ili lozinka</string>
+    <string name="email_exists">Email adresa već postoji</string>
+    <string name="registration_successful">Registracija uspešna!</string>
+    
+    <!-- VEZBA 4 - Navigation -->
+    <string name="nav_home">Početna</string>
+    <string name="nav_users">Korisnici</string>
+    <string name="nav_login">Prijava</string>
+    <string name="nav_register">Registracija</string>
+    <string name="nav_logout">Odjava</string>
 </resources>

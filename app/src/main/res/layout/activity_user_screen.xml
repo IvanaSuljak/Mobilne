@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VEZBA 4: Layout za UserScreen sa sortiranjem i filtriranjem korisnika -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UserScreenActivity">
+
+    <!-- VEZBA 4: Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Korisnici"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- VEZBA 4: Kontejner za sortiranje i filtriranje -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@android:color/holo_blue_light">
+
+        <!-- VEZBA 4: Sortiranje -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sortiraj korisnike:"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/sortSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/white" />
+
+        <!-- VEZBA 4: Filtriranje -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filtriraj korisnike:"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/filterEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Unesite tekst za filtriranje"
+                android:background="@android:color/white"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/filterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filtriraj"
+                android:background="@android:color/holo_orange_light"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/clearFilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ukloni filter"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <!-- VEZBA 4: Broj korisnika -->
+    <TextView
+        android:id="@+id/userCountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ukupno korisnika: 0"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white" />
+
+    <!-- VEZBA 4: Lista korisnika -->
+    <ListView
+        android:id="@+id/usersListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:padding="8dp" />
+
+</LinearLayout>

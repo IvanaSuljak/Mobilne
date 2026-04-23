@@ -3,6 +3,7 @@ package com.example.mobilnevezbe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,11 +20,20 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private EditText confirmPasswordEditText;
     private Button registerButton;
     
+    // VEZBA 4: UserManager za čuvanje korisnika
+    private UserManager userManager;
+    
+    // VEZBA 4: Toolbar za navigaciju
+    private Toolbar toolbar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
         Log.d(TAG, "onCreate called");
+        
+        // VEZBA 4: Inicijalizacija UserManager-a
+        userManager = UserManager.getInstance();
         
         initViews();
         setupClickListeners();
@@ -36,6 +46,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         registerButton = findViewById(R.id.registerButton);
+        toolbar = findViewById(R.id.toolbar); // VEZBA 4: Inicijalizacija toolbar-a
+        
+        // VEZBA 4: Postavljanje toolbar-a
+        setupToolbar();
     }
     
     private void setupClickListeners() {
@@ -61,17 +75,48 @@ public class RegisterScreenActivity extends AppCompatActivity {
                 return;
             }
             
-            // VEZBA 3: Uspe¹na registracija - prelazak na HomeScreen umesto LoginScreen
-            Toast.makeText(this, getString(R.string.success_registration), Toast.LENGTH_SHORT).show();
+            // VEZBA 4: Kreiranje novog korisnika i čuvanje u UserManager
+            User newUser = new User(name, email, phone, password);
+            
+            // VEZBA 4: Provera da li email već postoji
+            if (!userManager.addUser(newUser)) {
+                Toast.makeText(this, getString(R.string.email_exists), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            // VEZBA 4: Uspešna registracija
+            Toast.makeText(this, getString(R.string.registration_successful), Toast.LENGTH_SHORT).show();
             
             Intent intent = new Intent(RegisterScreenActivity.this, HomeScreenActivity.class);
-            // Prosleðivanje podataka na HomeScreen
+            // VEZBA 3: Prosleđivanje podataka na HomeScreen
             intent.putExtra("USER_NAME", name);
             intent.putExtra("USER_EMAIL", email);
             intent.putExtra("USER_PHONE", phone);
             startActivity(intent);
             finish(); // Zatvara RegisterScreen
         });
+    }
+    
+    // VEZBA 4: Postavljanje toolbar-a
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Registracija");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // VEZBA 4: Prikaz back dugmeta
+        }
+    }
+    
+    // VEZBA 4: Menu item click handler
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        
+        if (id == android.R.id.home) {
+            finish(); // VEZBA 4: Nazad na LoginScreen
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
     }
     
     @Override

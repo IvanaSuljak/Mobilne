@@ -1,15 +1,19 @@
 package com.example.mobilnevezbe;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -23,6 +27,9 @@ public class HomeScreenActivity extends AppCompatActivity {
     private TextView phoneValueTextView;
     private Button settingsButton;
     private Button logoutButton;
+    
+    // VEZBA 4: Toolbar za navigaciju
+    private Toolbar toolbar;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         phoneValueTextView = findViewById(R.id.phoneValueTextView);
         settingsButton = findViewById(R.id.settingsButton);
         logoutButton = findViewById(R.id.logoutButton);
+        toolbar = findViewById(R.id.toolbar); // VEZBA 4: Inicijalizacija toolbar-a
+        
+        // VEZBA 4: Postavljanje toolbar-a
+        setupToolbar();
         
         // VEZBA 3: Koristi string resurs za welcome poruku
         welcomeTextView.setText(getString(R.string.home_welcome));
@@ -57,8 +68,48 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         logoutButton.setOnClickListener(v -> {
             Log.d(TAG, "Logout clicked");
-            finish();
+            Toast.makeText(this, "Logout - povratak na LoginScreen", Toast.LENGTH_SHORT).show();
+            finish(); // Zatvara HomeScreen i vraća na prethodni
         });
+    }
+    
+    // VEZBA 4: Postavljanje toolbar-a
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Početna");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+    
+    // VEZBA 4: Menu inflacija
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_screen_menu, menu);
+        return true;
+    }
+    
+    // VEZBA 4: Menu item click handler
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        
+        if (id == android.R.id.home) {
+            finish(); // VEZBA 4: Nazad na prethodni ekran
+            return true;
+        } else if (id == R.id.action_users) {
+            // VEZBA 4: Navigacija na UserScreen
+            Intent intent = new Intent(HomeScreenActivity.this, UserScreenActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_logout) {
+            // VEZBA 4: Logout funkcionalnost
+            Toast.makeText(this, "Uspešno ste se odjavili", Toast.LENGTH_SHORT).show();
+            finish();
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
     }
     
     // VEZBA 3: Metoda za prijem i prikaz podataka iz RegisterScreen-a
