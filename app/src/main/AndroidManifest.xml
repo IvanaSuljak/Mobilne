@@ -19,6 +19,7 @@
             android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
+            <!-- ovo je glavni ulaz. Kada korisnik klikne na ikonicu aplikacije, otvori baš ovaj ekran -->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

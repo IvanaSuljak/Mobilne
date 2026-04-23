@@ -1,13 +1,13 @@
 # DOKUMENTACIJA IMPLEMENTACIJE ANDROID APLIKACIJE
 
 ## UVOD
-Ovaj dokument opisuje detaljnu implementaciju Android aplikacije sa tri ekrana: SplashScreen, LoginScreen i HomeScreen. Aplikacija prati standardni Android lifecycle i implementira osnovne funkcionalnosti kao što su login, navigacija i korišćenje mikrofona.
+Ovaj dokument opisuje detaljnu implementaciju Android aplikacije sa tri ekrana: SplashScreen, LoginScreen i HomeScreen. Aplikacija prati standardni Android lifecycle i implementira osnovne funkcionalnosti kao sto su login, navigacija i koriscenje mikrofona.
 
 ## PROJEKATNA STRUKTURA
 
 ### Glavni direktorijum: `c:\Users\ivana\Desktop\mobilne vezbe`
 
-**Važne putanje:**
+**Vazne putanje:**
 - `app/src/main/java/com/example/mobilnevezbe/` - Java klase
 - `app/src/main/res/layout/` - XML layout fajlovi
 - `app/src/main/res/values/strings.xml` - String resursi
@@ -22,33 +22,33 @@ Ovaj dokument opisuje detaljnu implementaciju Android aplikacije sa tri ekrana: 
 - Nakon 5 sekundi automatski prelazi na LoginScreen
 - Loguje sve lifecycle metode
 
-**Ključni kod:**
+**Kljucni kod:**
 ```java
 // Handler za odgodu prelaska
 new Handler().postDelayed(() -> {
     Intent intent = new Intent(SplashScreenActivity.this, LoginScreenActivity.class);
     startActivity(intent);
-    finish(); // Zatvara splash screen da se ne može vratiti nazad
+    finish(); // Zatvara splash screen da se ne moze vratiti nazad
 }, 5000); // 5000 milisekundi = 5 sekundi
 ```
 
-**Zašto Handler?**
-- `Handler.postDelayed()` omogućava da se kod izvrši nakon određenog vremena
-- Koristimo ga da prikažemo splash screen tačno 5 sekundi
-- `finish()` je važan da korisnik ne može da se vrati na splash screen sa back dugmeta
+**Zasto Handler?**
+- `Handler.postDelayed()` omogucava da se kod izvrsi nakon odredjenog vremena
+- Koristimo ga da prikazemo splash screen tacno 5 sekundi
+- `finish()` je vazan da korisnik ne moze da se vrati na splash screen sa back dugmeta
 
 **Lifecycle metode:**
-Svaka metoda loguje svoje izvršavanje:
+Svaka metoda loguje svoje izvrsavanje:
 - `onCreate()` - kreira aktivnost
 - `onStart()` - aktivnost postaje vidljiva
 - `onResume()` - aktivnost je u fokusu
-- `onPause()`, `onStop()`, `onDestroy()` - čišćenje resursa
+- `onPause()`, `onStop()`, `onDestroy()` - ciscenje resursa
 
 ### Layout: `activity_splash_screen.xml`
 
 **Struktura:**
 - `ConstraintLayout` kao glavni kontejner
-- `TextView` za poruku "Dobrodošli!"
+- `TextView` za poruku "Dobrodosli!"
 - `ImageView` za logo (opciono)
 
 ## 2. LOGIN SCREEN IMPLEMENTACIJA
@@ -62,7 +62,7 @@ Svaka metoda loguje svoje izvršavanje:
 - Register dugme vodi na RegisterScreen
 - Loguje sve lifecycle metode
 
-**Ključni kod:**
+**Kljucni kod:**
 ```java
 // Inicijalizacija view-ova
 private void initViews() {
@@ -91,8 +91,8 @@ private void setupClickListeners() {
 }
 ```
 
-**Zašto `finish()` nakon startActivity?**
-- Da korisnik ne može da se vrati na login screen sa back dugmeta
+**Zasto `finish()` nakon startActivity?**
+- Da korisnik ne moze da se vrati na login screen sa back dugmeta
 - Pravi "forward navigation" - korisnik ide samo napred kroz aplikaciju
 
 ### Layout: `activity_login_screen.xml`
@@ -111,10 +111,10 @@ private void setupClickListeners() {
 - Prikazuje formu za registraciju korisnika
 - Polja: ime, email, password, confirm password
 - Validacija unosa pre registracije
-- Nakon registracije vra na LoginScreen
+- Nakon registracije vraca na LoginScreen
 - Loguje sve lifecycle metode
 
-**Kljuèni kod:**
+**Kljucni kod:**
 ```java
 // Deklaracija svih polja za registraciju
 private EditText nameEditText;
@@ -146,31 +146,31 @@ private void setupClickListeners() {
         // 1. Provera da li su sva polja popunjena
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Log.d(TAG, "Please fill all fields");
-            return; // Prekida dalje izvravanje
+            return; // Prekida dalje izvrsavanje
         }
         
         // 2. Provera da li se password-i poklapaju
         if (!password.equals(confirmPassword)) {
             Log.d(TAG, "Passwords do not match");
-            return; // Prekida dalje izvravanje
+            return; // Prekida dalje izvrsavanje
         }
         
-        // 3. Ako sve proðe, vrati se na LoginScreen
-        finish(); // Zatvara RegisterScreen i vraa se na prethodni (LoginScreen)
+        // 3. Ako sve prodje, vrati se na LoginScreen
+        finish(); // Zatvara RegisterScreen i vraca se na prethodni (LoginScreen)
     });
 }
 ```
 
-**Za¹to `finish()` umesto `startActivity`?**
-- `finish()` zatvara trenutnu aktivnost i vraæa se na prethodnu
-- Korisnik se vraæa na LoginScreen nakon uspe¹ne registracije
-- Ne kreiramo novi LoginScreen, veæ se vraæamo na postojeæi
-- Èuva se back stack - korisnik moæe da se vrati nazad
+**Zasto `finish()` umesto `startActivity`?**
+- `finish()` zatvara trenutnu aktivnost i vraca se na prethodnu
+- Korisnik se vraca na LoginScreen nakon uspesne registracije
+- Ne kreiramo novi LoginScreen, vec se vracamo na postojeci
+- Cuva se back stack - korisnik moze da se vrati nazad
 
-**Validacija - za¹to je vaæna?**
-1. **Praæena polja** - spreèava slanje praznih podataka
-2. **Poklapanje lozinki** - osigurava da korisnik nije pogre¹io unos
-3. **Trim()** - uklanja suvi¹ne razmake sa poèetka i kraja
+**Validacija - zasto je vazna?**
+1. **Pracena polja** - spracava slanje praznih podataka
+2. **Poklapanje lozinki** - osigurava da korisnik nije pogresio unos
+3. **Trim()** - uklanja suvisne razmake sa pocetka i kraja
 
 ### Layout: `activity_register_screen.xml`
 
@@ -207,20 +207,20 @@ private void setupClickListeners() {
     android:inputType="textPassword" />
 ```
 
-**InputType obja¹njenje:**
+**InputType objasnjenje:**
 - `textPersonName` - optimizovano tastaturo za imena
 - `textEmailAddress` - prikazuje @ tastaturu
 - `textPassword` - sakriva tekst (prikazuje ****)
 
 **ConstraintLayout lanac (chain):**
 - Svi elementi su u vertikalnom lancu (`app:layout_constraintVertical_chainStyle="packed"`)
-- Svaki element je vezan za prethodni i sledeæi
-- Omoguæava responsive dizajn - prilagoðava se razlièitim ekranima
+- Svaki element je vezan za prethodni i sledeci
+- Omogucava responsive dizajn - prilagodjava se razlicitim ekranima
 
 **Styling:**
-- `android:padding="16dp"` - unutra¹nji razmak
-- `app:layout_constraintWidth_max="400dp"` - maksimalna ¹irina
-- `android:layout_marginBottom="16dp"` - razmak izmeðu elemenata
+- `android:padding="16dp"` - unutrasnji razmak
+- `app:layout_constraintWidth_max="400dp"` - maksimalna sirina
+- `android:layout_marginBottom="16dp"` - razmak izmedju elemenata
 
 ## 4. HOME SCREEN IMPLEMENTACIJA
 
@@ -228,16 +228,16 @@ private void setupClickListeners() {
 
 **Logika rada:**
 - Prikazuje welcome poruku
-- Mikrofon dugme koje traži permisiju
+- Mikrofon dugme koje trazi permisiju
 - Logout dugme za izlaz iz aplikacije
 - Loguje sve lifecycle metode
 
-**Ključni kod:**
+**Kljucni kod:**
 ```java
 // Provera permisije za mikrofon
 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
         != PackageManager.PERMISSION_GRANTED) {
-    // Traži permisiju ako nije data
+    // Trazi permisiju ako nije data
     ActivityCompat.requestPermissions(this,
             new String[]{Manifest.permission.RECORD_AUDIO},
             MICROPHONE_PERMISSION_REQUEST);
@@ -247,9 +247,9 @@ if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
 }
 ```
 
-**Permisije - zašto su važne?**
+**Permisije - zasto su vazne?**
 - Android 6.0+ zahteva runtime permisije za opasne dozvole
-- `RECORD_AUDIO` je "dangerous permission" - mora tražiti u runtime
+- `RECORD_AUDIO` je "dangerous permission" - mora traziti u runtime
 - `onRequestPermissionsResult()` hvata odgovor korisnika
 
 **Permission Request kod:**
@@ -275,7 +275,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 - `Button` za mikrofon sa ikonom (`android:drawableStart="@android:drawable/ic_btn_speak_now"`)
 - `Button` za logout
 
-## 4. LAYOUT FAJLOVI - VAŽNA NAPOMENA
+## 5. LAYOUT FAJLOVI - VAZNA NAPOMENA
 
 ### Context atribut
 Svaki layout fajl ima `tools:context` atribut:
@@ -283,17 +283,17 @@ Svaki layout fajl ima `tools:context` atribut:
 tools:context=".HomeScreen"
 ```
 
-**Šta radi?**
-- Povezuje XML layout sa odgovarajućom Java klasom
-- Omogućava Android Studiju da prikaže preview
-- Mora biti tačno ime klase (bez .java ekstenzije)
+**Sta radi?**
+- Povezuje XML layout sa odgovarajucom Java klasom
+- Omogucava Android Studiju da prikaze preview
+- Mora biti tacno ime klase (bez .java ekstenzije)
 
-**Problem koji smo rešili:**
+**Problem koji smo resili:**
 - Layout je imao `tools:context=".HomeScreenActivity"`
 - Java klasa se zvala `HomeScreen`
 - Ispravili smo da bude `tools:context=".HomeScreen"`
 
-## 5. IMPORTI - ŠTA I ZAŠVO
+## 6. IMPORTI - STA I ZASTO
 
 ### Obavezni importi za svaku aktivnost:
 ```java
@@ -313,9 +313,9 @@ import android.content.pm.PackageManager; // Za proveru statusa permisija
 import android.annotation.NonNull;       // Za onRequestPermissionsResult
 ```
 
-**Zašto svaki import?**
-- `Intent` - navigacija između aktivnosti
-- `Bundle` - čuva stanje aktivnosti
+**Zasto svaki import?**
+- `Intent` - navigacija izmedju aktivnosti
+- `Bundle` - cuva stanje aktivnosti
 - `Log` - debug informacije
 - `View` - osnova za sve UI elemente
 - Widget klase - pristup UI komponentama
@@ -326,15 +326,15 @@ import android.annotation.NonNull;       // Za onRequestPermissionsResult
 - `PackageManager` - status permisija
 - `@NonNull` - sigurnost koda
 
-## 6. ANDROID LIFECYCLE
+## 7. ANDROID LIFECYCLE
 
-### Metode i njihovo značenje:
+### Metode i njihovo znacenje:
 1. **`onCreate()`** - Kreiranje aktivnosti, postavljanje layouta
 2. **`onStart()`** - Aktivnost postaje vidljiva
-3. **`onResume()`** - Aktivnost je u fokusu, korisnik može interakciju
+3. **`onResume()`** - Aktivnost je u fokusu, korisnik moze interakciju
 4. **`onPause()`** - Aktivnost gubi fokus
-5. **`onStop()`** - Aktivnost više nije vidljiva
-6. **`onDestroy()`** - Aktivnost se uništava
+5. **`onStop()`** - Aktivnost vise nije vidljiva
+6. **`onDestroy()`** - Aktivnost se unistava
 
 **Logovanje:**
 ```java
@@ -348,9 +348,9 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-## 7. MANIFEST FAJL
+## 8. MANIFEST FAJL
 
-**AndroidManifest.xml** mora sadržati sve aktivnosti:
+**AndroidManifest.xml** mora sadrzati sve aktivnosti:
 ```xml
 <activity android:name=".SplashScreenActivity" android:exported="true">
     <intent-filter>
@@ -362,11 +362,11 @@ protected void onCreate(Bundle savedInstanceState) {
 <activity android:name=".HomeScreen" />
 ```
 
-**Šta znači `android:exported="true"`?**
+**Sta znaci `android:exported="true"`?**
 - Dozvoljava drugim aplikacijama da pokrenu ovu aktivnost
 - Obavezno za LAUNCHER aktivnost
 
-## 8. TESTIRANJE I DEBUG
+## 9. TESTIRANJE I DEBUG
 
 ### Kako testirati:
 1. **Pokrenuti aplikaciju** - zelena strelica u Android Studiju
@@ -376,59 +376,59 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ### Logcat filter:
 - Tag: `SplashScreen`, `LoginScreen`, `HomeScreen`
-- Vidiće sve lifecycle logove
+- Vidice sve lifecycle logove
 
-## 9. MOGUĆI PROBLEMI I REŠENJA
+## 10. MOGUCE PROBLEMI I RESENJA
 
 ### Problem: "Cannot resolve symbol"
-- **Uzrok:** Pogrešan naziv klase u `tools:context`
-- **Rešenje:** Proveriti da se naziv u XML-u poklapa sa Java klasom
+- **Uzrok:** Pogresan naziv klase u `tools:context`
+- **Resenje:** Proveriti da se naziv u XML-u poklapa sa Java klasom
 
 ### Problem: "Resource not found"
-- **Uzrok:** Pogrešan ID u `findViewById()`
-- **Rešenje:** Proveriti da ID postoji u layout fajlu
+- **Uzrok:** Pogresan ID u `findViewById()`
+- **Resenje:** Proveriti da ID postoji u layout fajlu
 
 ### Problem: Aplikacija se ne startuje
 - **Uzrok:** Nedostaje aktivnost u manifestu
-- **Rešenje:** Dodati sve aktivnosti u AndroidManifest.xml
+- **Resenje:** Dodati sve aktivnosti u AndroidManifest.xml
 
-## 10. NAJBOLJE PRAKSE
+## 11. NAJBOLJE PRAKSE
 
-### Šta smo primenili:
+### Sta smo primenili:
 1. **Konstante za tagove** - `private static final String TAG`
 2. **Metode za inicijalizaciju** - `initViews()`, `setupClickListeners()`
 3. **Provera inputa** - provera da li su polja prazna
 4. **Lifecycle logovanje** - za debug
 5. **Provera permisija** - runtime permission handling
 
-### Zašto je ovo važno:
-- **Održivost koda** - lakše za razumevanje i modifikaciju
-- **Debug** - lakše pronalaženje grešaka
-- **Korisničko iskustvo** - pravilna navigacija i poruke
+### Zasto je ovo vazno:
+- **Odrzivost koda** - lakse za razumevanje i modifikaciju
+- **Debug** - lakse pronalazenje gresaka
+- **Korisnicko iskustvo** - pravilna navigacija i poruke
 - **Sigurnost** - pravilno rukovanje permisijama
 
-## ZAKLJUČAK
+## ZAKLJUCAK
 
 Implementirali smo potpuno funkcionalnu Android aplikaciju sa:
-- ✅ Tri ekrana sa navigacijom
-- ✅ Splash screen sa vremenskom odgodom
-- ✅ Login forma sa validacijom
-- ✅ Home screen sa mikrofon funkcionalnošću
-- ✅ Runtime permisije
-- ✅ Lifecycle logovanje
-- ✅ Error handling
+- \u2713 Tri ekrana sa navigacijom
+- \u2713 Splash screen sa vremenskom odgodom
+- \u2713 Login forma sa validacijom
+- \u2713 Home screen sa mikrofon funkcionalnoscu
+- \u2713 Runtime permisije
+- \u2713 Lifecycle logovanje
+- \u2713 Error handling
 
-Svi komponenti su povezani i funkcionišu kao jedinstvena aplikacija. Kod prati Android best practice i spreman je za produkciju.
+Svi komponenti su povezani i funkcionisu kao jedinstvena aplikacija. Kod prati Android best practice i spreman je za produkciju.
 
-Permisije u Androidu su dozvole koje korisnik daje aplikaciji da pristupi određenim resursima ili funkcijama telefona.
+Permisije u Androidu su dozvole koje korisnik daje aplikaciji da pristupi odredjenim resursima ili funkcijama telefona.
 Kako radi u nasoj aplikaciji
 // 1. Provera da li imamo dozvolu
 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
         != PackageManager.PERMISSION_GRANTED) {
     
-    // 2. Ako nemamo, tražimo od korisnika
+    // 2. Ako nemamo, trazimo od korisnika
     ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.RECORD_AUDIO},
+            new String[]{Manifest.permission.RECORD_AUDIO],
             MICROPHONE_PERMISSION_REQUEST);
 } else {
     // 3. Ako imamo, koristimo mikrofon
@@ -439,17 +439,17 @@ if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
 
 # VEZBA 3 - NOVE FUNKCIONALNOSTI
 
-## \u010cemu slu\u017ee VEZBA 3 zadaci?
+## Cemu sluze VEZBA 3 zadaci?
 
 VEZBA 3 uvodi naprednije koncepte Android razvoja:
-- **Relativni raspored** - kori\u0161\u0107enje ConstraintLayout za kompleksnije layout-e
-- **InputType optimizacija** - prilago\u0111avanje tastature za tip unosa
-- **Prenos podataka** - slanje podataka izme\u0111u aktivnosti
-- **String resursi** - internacionalizacija i odr\u017eavanje koda
+- **Relativni raspored** - koriscenje ConstraintLayout za kompleksnije layout-e
+- **InputType optimizacija** - prilagodjavanje tastature za tip unosa
+- **Prenos podataka** - slanje podataka izmedju aktivnosti
+- **String resursi** - internacionalizacija i odrzavanje koda
 
 ## 1. REGISTERSCREEN - DODAT POLJE ZA TELEFON
 
-### \u0160ta je dodato?
+### Sta je dodato?
 ```xml
 <!-- VEZBA 3: Dodato polje za broj telefona -->
 <EditText
@@ -458,10 +458,10 @@ VEZBA 3 uvodi naprednije koncepte Android razvoja:
     android:inputType="phone" />
 ```
 
-### Za\u0161to `inputType="phone"`?
+### Zasto `inputType="phone"`?
 - **Optimizovana tastatura** - prikazuje brojeve i simbole za telefon
-- **Automatsko formatiranje** - mo\u017ee da formatira broj telefona
-- **Bolje korisni\u010dko iskustvo** - korisnik odmah vidi da treba da unese broj
+- **Automatsko formatiranje** - moze da formatira broj telefona
+- **Bolje korisnicko iskustvo** - korisnik odmah vidi da treba da unese broj
 
 ### Java promene:
 ```java
@@ -474,13 +474,13 @@ phoneEditText = findViewById(R.id.phoneEditText);
 // U validaciji:
 String phone = phoneEditText.getText().toString().trim();
 if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
-    // Provera svih polja uklju\u010duju\u0107i telefon
+    // Provera svih polja ukljucujuci telefon
 }
 ```
 
-## 2. LOGINSCREEN - PRILAGO\u0110EN INPUTTYPE
+## 2. LOGINSCREEN - PRILAGODJEN INPUTTYPE
 
-### \u0160ta je promenjeno?
+### Sta je promenjeno?
 ```xml
 <EditText
     android:inputType="textEmailAddress" />  <!-- VEZBA 3: Email tastatura -->
@@ -491,13 +491,13 @@ if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) 
 
 ### InputType opcije:
 - `textEmailAddress` - prikazuje @ tastaturu, optimizovano za email
-- `textPassword` - sakriva unos (****), automatski prelazi na slede\u0107e polje
+- `textPassword` - sakriva unos (****), automatski prelazi na sledece polje
 - `textPersonName` - optimizovano za imena (prvo slovo veliko)
-- `phone` - numeri\u010dka tastatura sa formatiranjem
+- `phone` - numericka tastatura sa formatiranjem
 
 ## 3. HOMESCREEN - CONSTRAINTLAYOUT RASPORED
 
-### \u0160ta je novo?
+### Sta je novo?
 Kompletno redizajniran layout sa **ConstraintLayout**:
 
 ```xml
@@ -516,15 +516,15 @@ Kompletno redizajniran layout sa **ConstraintLayout**:
 <TextView android:id="@+id/emailValueTextView" />
 <TextView android:id="@+id/phoneValueTextView" />
 
-<!-- VEZBA 3: Settings i Logout dugmi\u0107i -->
+<!-- VEZBA 3: Settings i Logout dugmici -->
 <Button android:id="@+id/settingsButton" />
 <Button android:id="@+id/logoutButton" />
 ```
 
 ### ConstraintLayout lanac:
 - **Vertikalni lanac** - svi elementi su povezani
-- **Responsive dizajn** - prilago\u0111ava se razli\u010ditim ekranima
-- **Pozicioniranje** - svaki element je vezan za prethodni i slede\u0107i
+- **Responsive dizajn** - prilagodjava se razlicitim ekranima
+- **Pozicioniranje** - svaki element je vezan za prethodni i sledeci
 
 ## 4. PRENOS PODATAKA IZ REGISTERSCREEN U HOMESCREEN
 
@@ -545,44 +545,44 @@ private void receiveAndDisplayUserData() {
     String userPhone = intent.getStringExtra("USER_PHONE");
     
     // Prikaz podataka
-    welcomeTextView.setText("Dobrodo\u0161li, " + userName + "!");
+    welcomeTextView.setText("Dobrodosli, " + userName + "!");
     emailValueTextView.setText(userEmail);
     phoneValueTextView.setText(userPhone);
 }
 ```
 
-### Za\u0161to `Intent.putExtra()`?
-- **Prenos podataka** - \u010duva stanje izme\u0111u aktivnosti
-- **Tipovi podataka** - mo\u017ee da prenese String, int, boolean, objekte
-- **Klju\u010d-vrednost** - svaki podatak ima jedinstveni klju\u010d
+### Zasto `Intent.putExtra()`?
+- **Prenos podataka** - cuva stanje izmedju aktivnosti
+- **Tipovi podataka** - moze da prenese String, int, boolean, objekte
+- **Kljuc-vrednost** - svaki podatak ima jedinstveni kljuc
 
 ## 5. STRING RESURSI - INTERNACIONALIZACIJA
 
-### \u0160ta je strings.xml?
+### Sta je strings.xml?
 ```xml
 <!-- VEZBA 3 - String resursi za sve tekstove -->
 <string name="register_title">Registracija</string>
 <string name="register_email_hint">Email</string>
 <string name="register_phone_hint">Broj telefona</string>
-<string name="home_welcome">Dobrodo\u0161li na po\u010detnu stranicu!</string>
+<string name="home_welcome">Dobrodosli na pocetnu stranicu!</string>
 ```
 
-### Kori\u0161\u0107enje u XML:
+### Koriscenje u XML:
 ```xml
 <TextView android:text="@string/register_title" />
 <EditText android:hint="@string/register_email_hint" />
 ```
 
-### Kori\u0161\u0107enje u Java:
+### Koriscenje u Java:
 ```java
 welcomeTextView.setText(getString(R.string.home_welcome));
 Toast.makeText(this, getString(R.string.success_registration), Toast.LENGTH_SHORT).show();
 ```
 
 ### Prednosti string resursa:
-1. **Odr\u017eavanje** - svi tekstovi na jednom mestu
-2. **Internacionalizacija** - lako prevo\u0111enje na druge jezike
-3. **Konsistentnost** - isti tekst se koristi na vi\u0161e mesta
+1. **Odrzavanje** - svi tekstovi na jednom mestu
+2. **Internacionalizacija** - lako prevodjenje na druge jezike
+3. **Konsistentnost** - isti tekst se koristi na vise mesta
 4. **Tip bezbednosti** - kompajler proverava postojanje resursa
 
 ## 6. NAVIGACIJA TOKOM APLIKACIJE
@@ -597,7 +597,7 @@ SplashScreen (5s)
 
 ### Promene u navigaciji:
 - **RegisterScreen \u2192 HomeScreen** - umesto povratka na LoginScreen
-- **Prenos podataka** - korisni\u010dki podaci se prenose na HomeScreen
+- **Prenos podataka** - korisnicki podaci se prenose na HomeScreen
 - **Personalizacija** - HomeScreen prikazuje ime i podatke korisnika
 
 ---
@@ -605,7 +605,7 @@ SplashScreen (5s)
 **VEZBA 3 je kompletna!** Aplikacija sada ima:
 - \u2713 Relativni raspored sa ConstraintLayout
 - \u2713 Optimizovane inputType za sve polja
-- \u2713 Prenos podataka izme\u0111u aktivnosti
+- \u2713 Prenos podataka izmedju aktivnosti
 - \u2713 Sve tekstove u string resursima
 - \u2713 Personalizovani HomeScreen
 - \u2713 Profesionalan UI sa bojama i stilovima
