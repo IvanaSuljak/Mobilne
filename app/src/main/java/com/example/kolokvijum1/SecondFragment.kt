@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
-        import android.view.View
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
@@ -14,16 +14,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.kolokvijum1.data.AppDatabase
-import com.example.kolokvijum1.data.User
-import kotlinx.coroutines.Dispatchers
+import com.example.kolokvijum1.data.UserRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SecondFragment : Fragment() {
     private lateinit var editTextName: EditText
     private lateinit var btnSave: Button
-    private lateinit var database: AppDatabase
+    private lateinit var userRepository: UserRepository
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
 
     override fun onCreateView(
@@ -37,7 +34,7 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        database = AppDatabase.getDatabase(requireContext())
+        userRepository = (requireActivity() as MainActivity).getUserRepository()
         
         editTextName = view.findViewById(R.id.edit_text_name)
         btnSave = view.findViewById(R.id.btn_save)
@@ -97,10 +94,7 @@ class SecondFragment : Fragment() {
     
     private fun saveToDatabase(name: String) {
         lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                val user = User(ime = name)
-                database.userDao().insertUser(user)
-            }
+            userRepository.insertUser(name)
             // Očisti polje nakon čuvanja
             editTextName.text.clear()
         }

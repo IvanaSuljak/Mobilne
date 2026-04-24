@@ -32,11 +32,12 @@ Ovaj projekat je Android aplikacija kreirana za potrebe prvog kolokvijuma iz pre
   - Ako su dozvole date:
     - Čuva sadržaj u Room bazu podataka
 
-### 4. Baza podataka (Room)
+### 4. Baza podataka (SQLDelight)
 - Entitet **Korisnik** sa poljem:
   - `ime` (String)
 - Automatski generisan ID
-- DAO metode za ubacivanje i dohvatanje poslednjeg korisnika
+- SQL upiti za ubacivanje i dohvatanje poslednjeg korisnika
+- Korišćenje SQLDelight "lite" baze podataka
 
 ### 5. SecondActivity
 - Prikazuje centriran tekst "Nema dozvole!"
@@ -45,7 +46,7 @@ Ovaj projekat je Android aplikacija kreirana za potrebe prvog kolokvijuma iz pre
 ## Tehnologije
 - **Kotlin** - Programski jezik
 - **Android SDK** - Platforma
-- **Room Database** - Lokalna baza podataka
+- **SQLDelight** - "Lite" SQL baza podataka
 - **SharedPreferences** - Jednostavno čuvanje podataka
 - **Fragments** - Modularizacija UI-ja
 - **Coroutines** - Asinhrono programiranje
@@ -62,9 +63,10 @@ app/
 │   │   ├── FirstFragment.kt
 │   │   ├── SecondFragment.kt
 │   │   └── data/
-│   │       ├── User.kt
-│   │       ├── UserDao.kt
-│   │       └── AppDatabase.kt
+│   │       ├── Database.kt
+│   │       └── UserRepository.kt
+│   ├── sqldelight/com/example/kolokvijum1/data/
+│   │   └── Korisnik.sq
 │   ├── res/
 │   │   ├── layout/
 │   │   │   ├── activity_main.xml

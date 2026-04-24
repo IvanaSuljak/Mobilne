@@ -1,0 +1,13 @@
+CREATE TABLE Korisnik (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    ime TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM Korisnik ORDER BY id DESC;
+
+selectLast:
+SELECT * FROM Korisnik ORDER BY id DESC LIMIT 1;
+
+insertUser:
+INSERT INTO Korisnik (ime) VALUES (?);

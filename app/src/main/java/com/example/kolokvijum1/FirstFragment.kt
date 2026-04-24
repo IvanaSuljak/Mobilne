@@ -9,16 +9,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.kolokvijum1.data.AppDatabase
-import com.example.kolokvijum1.data.User
-import kotlinx.coroutines.Dispatchers
+import com.example.kolokvijum1.data.Korisnik
+import com.example.kolokvijum1.data.UserRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FirstFragment : Fragment() {
     private lateinit var btnProveri: Button
     private lateinit var btnIspisi: Button
-    private lateinit var database: AppDatabase
+    private lateinit var userRepository: UserRepository
     private var isSecondButtonEnabled = false
 
     override fun onCreateView(
@@ -32,7 +30,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        database = AppDatabase.getDatabase(requireContext())
+        userRepository = (requireActivity() as MainActivity).getUserRepository()
         
         btnProveri = view.findViewById(R.id.btn_proveri)
         btnIspisi = view.findViewById(R.id.btn_ispisi)
@@ -53,9 +51,7 @@ class FirstFragment : Fragment() {
     
     private fun showUserOrSharedPreferencesToast() {
         lifecycleScope.launch {
-            val lastUser = withContext(Dispatchers.IO) {
-                database.userDao().getLastUser()
-            }
+            val lastUser = userRepository.getLastUser()
             
             val sharedPreferences = (requireActivity() as MainActivity).getSharedPreferences()
             val initialContent = sharedPreferences.getString("inicijalno", getString(R.string.zdravo))
