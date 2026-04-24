@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Kolokvijum1</string>
+    <string name="proveri">Proveri</string>
+    <string name="ispisi">Ispiši</string>
+    <string name="sacuvaj">Sačuvaj</string>
+    <string name="nema_dozvole">Nema dozvole!</string>
+    <string name="zdravo">Zdravo!</string>
+</resources>
