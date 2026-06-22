@@ -9,6 +9,34 @@
         android:title="Korisnici"
         app:showAsAction="ifRoom" />
 
+    <!-- VEZBA 7: Navigacija na Retrofit ekran -->
+    <item
+        android:id="@+id/action_retrofit"
+        android:icon="@android:drawable/ic_menu_send"
+        android:title="HTTP Zahtevi"
+        app:showAsAction="ifRoom" />
+
+    <!-- VEZBA 8: Navigacija na Maps ekran -->
+    <item
+        android:id="@+id/action_maps"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Mapa"
+        app:showAsAction="ifRoom" />
+
+    <!-- VEZBA 9: Navigacija na Senzori ekran -->
+    <item
+        android:id="@+id/action_senzori"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Senzori"
+        app:showAsAction="never" />
+
+    <!-- VEZBA 9: Navigacija na Kamera ekran -->
+    <item
+        android:id="@+id/action_kamera"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="Kamera"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_logout"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"

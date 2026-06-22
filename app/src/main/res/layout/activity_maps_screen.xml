@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- VEZBA 8: SupportMapFragment — ovde se prikazuje Google Mapa -->
+    <!-- layout_weight="1" znači da mapa zauzima sav slobodni prostor -->
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Panel sa informacijama o lokaciji -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@android:color/white">
+
+        <!-- Koordinate -->
+        <TextView
+            android:id="@+id/koordinateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pritisni dugme za lokaciju..."
+            android:textSize="13sp"
+            android:padding="8dp"
+            android:background="@android:color/holo_blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Adresa (Geocoding rezultat) -->
+        <TextView
+            android:id="@+id/adresaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adresa će biti prikazana ovde..."
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:background="@android:color/background_light"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Dugmad -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/mojaPozicijaButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Moja lokacija"
+                android:layout_marginEnd="4dp"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+            <Button
+                android:id="@+id/noviSadiButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Novi Sad"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

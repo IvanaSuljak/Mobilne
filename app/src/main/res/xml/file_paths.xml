@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    VEZBA 9: FileProvider konfiguracija.
+    Definiše koje direktorijume aplikacija može da deli putem FileProvider-a.
+    Ovo je OBAVEZNO za slanje URI-ja ka Camera aplikaciji na Androidu 7+.
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Deli fajlove iz privatnog Pictures direktorijuma aplikacije -->
+    <external-files-path
+        name="moje_slike"
+        path="Pictures/" />
+</paths>

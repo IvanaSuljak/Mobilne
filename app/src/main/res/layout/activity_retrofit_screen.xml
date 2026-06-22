@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ScrollView omogućava skrolovanje kada ima puno teksta -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ===== SEKCIJA: PRVI POST ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GET /posts/1 — Prvi post:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- VEZBA 7: TextView za prikaz prvog posta -->
+            <TextView
+                android:id="@+id/postTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pritisni dugme da učitaš..."
+                android:textSize="13sp"
+                android:padding="12dp"
+                android:background="@android:color/background_light"
+                android:layout_marginBottom="8dp"
+                android:minLines="4" />
+
+            <Button
+                android:id="@+id/ucitajPostButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Učitaj prvi post (GET /posts/1)"
+                android:layout_marginBottom="24dp"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+            <!-- ===== SEKCIJA: DRUGI KOMENTAR ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GET /comments/2 — Drugi komentar:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_green_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- VEZBA 7: TextView za prikaz drugog komentara -->
+            <TextView
+                android:id="@+id/komentarTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pritisni dugme da učitaš..."
+                android:textSize="13sp"
+                android:padding="12dp"
+                android:background="@android:color/background_light"
+                android:layout_marginBottom="8dp"
+                android:minLines="4" />
+
+            <Button
+                android:id="@+id/ucitajKomentarButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Učitaj drugi komentar (GET /comments/2)"
+                android:layout_marginBottom="24dp"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+            <!-- ===== SEKCIJA: BROJ KORISNIKA U TOASTU ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GET /users — Broj korisnika u Toast-u:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_orange_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/ucitajKorisnikeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prikaži broj korisnika (GET /users)"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

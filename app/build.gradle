@@ -35,4 +35,16 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // VEZBA 7: Retrofit za HTTP zahteve
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // VEZBA 7: Gson konverter - automatski konvertuje JSON u Java objekte
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // VEZBA 7: OkHttp logger - prikazuje zahteve/odgovore u Logcat-u (korisno za debug)
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // VEZBA 8: Google Maps SDK za prikaz mape
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    // VEZBA 8: Fused Location Provider - najtačniji i najbrži način za dobijanje lokacije
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
 }

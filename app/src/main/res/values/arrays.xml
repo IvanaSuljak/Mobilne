@@ -7,4 +7,11 @@
         <item>@string/sort_email</item>
         <item>@string/sort_date</item>
     </string-array>
+
+    <!-- VEZBA 6: Uloge korisnika za Spinner na ekranu registracije -->
+    <string-array name="uloge">
+        <item>Putnik</item>
+        <item>Vozac</item>
+        <item>Administrator</item>
+    </string-array>
 </resources>

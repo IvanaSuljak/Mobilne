@@ -7,6 +7,29 @@
     
     <!-- Microphone permission (dynamic) -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    
+    <!-- VEZBA 5: Network state permission za proveru konekcije -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- VEZBA 5: Notification permission za Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <!-- VEZBA 5: Wake lock permission za servis u pozadini -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- VEZBA 6: Dozvola za čitanje kontakata (ContentProvider) -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- VEZBA 9: Dozvola za kameru -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- VEZBA 9: Hardverska karakteristika kamere (opciono, ali dobra praksa) -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!-- VEZBA 8: Dozvole za lokaciju -->
+    <!-- ACCESS_FINE_LOCATION = GPS (najtačnije, troši više baterije) -->
+    <!-- ACCESS_COARSE_LOCATION = WiFi/mreža (manje tačno, štedi bateriju) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -42,6 +65,80 @@
         <activity
             android:name=".UserScreenActivity"
             android:exported="false" />
+        
+        <!-- VEZBA 6: Driver Screen Activity (za ulogu vozac) -->
+        <activity
+            android:name=".DriverScreenActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 6: Passenger Screen Activity (za ulogu putnik) -->
+        <activity
+            android:name=".PassengerScreenActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 6: Settings Activity (podešavanja sinhronizacije) -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 6: Contacts Activity (čitanje iz ContentProvider-a) -->
+        <activity
+            android:name=".ContactsActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 7: Retrofit Activity (HTTP zahtevi) -->
+        <activity
+            android:name=".RetrofitActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 8: Maps Activity (Google Maps + Lokacija) -->
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 9: Senzori Activity -->
+        <activity
+            android:name=".SenzoriActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 9: Kamera Activity -->
+        <activity
+            android:name=".KameraActivity"
+            android:exported="false" />
+
+        <!-- VEZBA 9: FileProvider — potreban za deljenje URI-ja slike sa Camera app (Android 7+) -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- VEZBA 8: Google Maps API ključ -->
+        <!-- VAŽNO: Zameni YOUR_API_KEY sa pravim ključem iz Google Cloud Console -->
+        <!-- https://console.cloud.google.com → APIs → Maps SDK for Android → Credentials -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY_OVDE" />
+
+        <!-- VEZBA 5: Internet Check Service -->
+        <service
+            android:name=".InternetCheckService"
+            android:enabled="true"
+            android:exported="false" />
+        
+        <!-- VEZBA 5: Internet Status Receiver -->
+        <receiver
+            android:name=".InternetStatusReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.mobilnevezbe.INTERNET_STATUS" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

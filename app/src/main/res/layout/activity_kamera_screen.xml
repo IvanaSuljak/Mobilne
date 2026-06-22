@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ZADATAK 4: ImageView za prikaz slike -->
+    <ImageView
+        android:id="@+id/slikaImageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_slika_placeholder"
+        android:scaleType="centerCrop"
+        android:contentDescription="Slika" />
+
+    <!-- Dugmad za upravljanje slikom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Dodaj (snimi kamerom) -->
+        <Button
+            android:id="@+id/snimiFotoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dodaj sliku (Kamera)"
+            android:layout_marginBottom="8dp"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+        <!-- Izmeni (odaberi iz galerije) -->
+        <Button
+            android:id="@+id/odaberiGalerijaButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Izmeni sliku (Galerija)"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Briši -->
+        <Button
+            android:id="@+id/obrisiSlikuButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Obriši sliku"
+            android:background="@android:color/holo_red_dark"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

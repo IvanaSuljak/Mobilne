@@ -65,10 +65,45 @@
     <string name="email_exists">Email adresa već postoji</string>
     <string name="registration_successful">Registracija uspešna!</string>
     
+    <!-- VEZBA 5 - Notifikacije i servisi -->
+    <string name="notification_channel_user_registration">Registracija korisnika</string>
+    <string name="notification_channel_user_registration_desc">Notifikacije o novim registrovanim korisnicima</string>
+    <string name="notification_channel_internet_status">Internet konekcija</string>
+    <string name="notification_channel_internet_status_desc">Obaveštenja o statusu internet konekcije</string>
+    
+    <string name="notification_user_registered_title">Novi korisnik registrovan!</string>
+    <string name="notification_user_registered_text">Korisnik %s se uspešno registrovao</string>
+    <string name="notification_user_registered_big_text">Novi korisnik %s se upravo registrovao u aplikaciji. Kliknite da vidite detalje.</string>
+    
+    <string name="notification_internet_offline_title">Nema internet konekcije</string>
+    <string name="notification_internet_offline_text">Proverite internet konekciju i pokušajte ponovo</string>
+    <string name="notification_internet_offline_big_text">Aplikacija nije povezana na internet. Kliknite da otvorite podešavanja i uključite Wi-Fi ili mobilne podatke.</string>
+    
+    <string name="notification_action_show">Prikaži</string>
+    <string name="notification_action_settings">Podešavanja</string>
+    
+    <string name="service_internet_check_started">Servis za proveru interneta pokrenut</string>
+    <string name="service_internet_check_stopped">Servis za proveru interneta zaustavljen</string>
+    <string name="receiver_internet_status_registered">InternetStatusReceiver registrovan</string>
+    <string name="receiver_internet_status_unregistered">InternetStatusReceiver unregistrovan</string>
+    
     <!-- VEZBA 4 - Navigation -->
     <string name="nav_home">Početna</string>
     <string name="nav_users">Korisnici</string>
     <string name="nav_login">Prijava</string>
     <string name="nav_register">Registracija</string>
     <string name="nav_logout">Odjava</string>
+
+    <!-- VEZBA 6 - SharedPreferences, baza podataka, uloge, ContentProvider -->
+    <string name="register_uloga_label">Uloga u sistemu:</string>
+    <string name="settings_title">Podešavanja sinhronizacije</string>
+    <string name="sync_never">Nikad</string>
+    <string name="sync_1_min">Na svakih 1 min</string>
+    <string name="sync_15_min">Na svakih 15 min</string>
+    <string name="sync_30_min">Na svakih 30 min</string>
+    <string name="settings_saved">Podešavanja sačuvana</string>
+    <string name="contacts_title">Kontakti (ContentProvider)</string>
+    <string name="driver_screen_title">Ekran Vozača</string>
+    <string name="passenger_screen_title">Ekran Putnika</string>
+    <string name="logout_success">Uspešno odjavljen</string>
 </resources>

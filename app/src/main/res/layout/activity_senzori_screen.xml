@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ZADATAK 2: Shake status -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SHAKE DETEKCIJA:"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_red_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/shakeStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Protresite uređaj..."
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@android:color/background_light"
+                android:layout_marginBottom="16dp"
+                android:minLines="2" />
+
+            <!-- ZADATAK 1: Akcelerometar -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ZADATAK 1 — TYPE_ACCELEROMETER:"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/akcelerometarTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Čekanje na podatke..."
+                android:textSize="15sp"
+                android:fontFamily="monospace"
+                android:padding="12dp"
+                android:background="@android:color/background_light"
+                android:layout_marginBottom="16dp"
+                android:minLines="4" />
+
+            <!-- ZADATAK 3: Žiroskop -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ZADATAK 3 — TYPE_GYROSCOPE (senzor po izboru):"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_green_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/ziroskopTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Čekanje na podatke..."
+                android:textSize="15sp"
+                android:fontFamily="monospace"
+                android:padding="12dp"
+                android:background="@android:color/background_light"
+                android:layout_marginBottom="16dp"
+                android:minLines="4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Senzori su aktivni dok je ekran vidljiv.\nOdjavljuju se automatski u onPause()."
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
