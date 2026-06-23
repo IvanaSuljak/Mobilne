@@ -191,6 +191,112 @@ private static final String BASE_URL =
 
 ---
 
+## Kad zadatak kaže DRUGAČIJE (ne Post, ne obrisiButton…)
+
+Obrazac je uvek isti — menjaš **imena** i **šta radi listener**, ne strukturu projekta.
+
+### `TODO_Activity` → uvek `MainActivity`?
+
+| Situacija | Šta pišeš |
+|-----------|-----------|
+| Kolokvijum — jedan ekran (kao kol. 2) | **`MainActivity`** — ignoriši `TODO_Activity` |
+| Zadatak eksplicitno: „napravi MapsActivity“ | **tada** pravi tu klasu + `<activity .MapsActivity/>` |
+| Retrofit šablon sa `<activity .TODO_Activity/>` | **ne dodaj** — samo INTERNET dozvolu |
+
+> Na kolokvijumu: **da, praktično uvek samo MainActivity.**
+
+---
+
+### Nije `Post` nego `User`, `Comment`, `Proizvod`…
+
+| Deo | Šta menjaš |
+|-----|------------|
+| Klasa | `User.java` umesto `Post.java` — polja iz **JSON-a u zadatku** |
+| ApiService | `@GET("users")` + `Call<List<User>>` umesto `posts` / `Post` |
+| DatabaseHelper | ime tabele/kolona prema modelu (npr. `korisnici`, `ime`, `email`) |
+| MainActivity | import `User`, isti `enqueue` obrazac |
+
+**Primer — zadatak kaže korisnike:**
+
+```java
+// ApiService
+@GET("users")
+Call<List<User>> getSviKorisnici();
+
+// MainActivity — isto kao za postove, samo tip
+apiService.getSviKorisnici().enqueue(new Callback<List<User>>() { ... });
+```
+
+Vidi `SABLON_Retrofit_...md` — u ApiService su primeri za `comments`, `users`.
+
+---
+
+### `GET` vs `POST` (HTTP metoda — ne mešaj sa klasom `Post`!)
+
+| Zadatak kaže | ApiService |
+|--------------|------------|
+| dohvati, učitaj, GET, sa sajta | `@GET("...")` — **kolokvijum skoro uvek ovo** |
+| pošalji, kreiraj na serveru, POST | `@POST("...")` + `@Body` |
+
+Kolokvijum 2 = samo **GET** lista postova.  
+Ako zadatak traži POST → `SABLON_Retrofit_...md` → tabela anotacija (`@POST`, `@Body`).
+
+---
+
+### Nije `obrisiButton` nego `kreirajButton` (ili bilo koji ID)
+
+Menja se **samo ime** — logika u listeneru zavisi od zadatka.
+
+| Gde | Bilo | Zadatak kaže `kreirajButton` |
+|-----|------|------------------------------|
+| XML | `android:id="@+id/obrisiButton"` | `android:id="@+id/kreirajButton"` |
+| MainActivity field | `private Button obrisiButton` | `private Button kreirajButton` |
+| findViewById | `R.id.obrisiButton` | `R.id.kreirajButton` |
+| Listener | `obrisiButton.setOnClickListener(...)` | `kreirajButton.setOnClickListener(...)` |
+| **Šta radi klik** | `dbHelper.obrisiPrviPost()` | ono što zadatak traži — npr. `dbHelper.dodaj(...)`, otvaranje kamere… |
+
+**Primer — zadatak: „Button kreirajButton dodaje novi red u bazu“:**
+
+```java
+kreirajButton.setOnClickListener(v -> {
+    Post p = new Post(); // ili iz EditText polja
+    dbHelper.dodajPost(p);
+});
+```
+
+**Primer — zadatak: „Button sacuvajButton snima u SharedPreferences“:**
+
+```java
+sacuvajButton.setOnClickListener(v -> {
+    getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        .edit().putString("kljuc", nekiEditText.getText().toString()).apply();
+});
+```
+
+> **Pravilo:** ID iz zadatka = ID u XML = `R.id.istiId` u Javi. **Šta dugme radi** = tekst zadatka (obriši / kreiraj / sačuvaj).
+
+---
+
+### Nije `postSwitch` nego `syncSwitch`, nije `lokacijaTextView` nego `statusText`…
+
+Isti princip kao za dugme — zameni ID **svuda isto**. Switch listener logika ostaje obrazac (ON/OFF), menja se **šta radi** u `if (isChecked)`.
+
+---
+
+### Brza mapa — zadatak kaže X → menjaš Y
+
+| Zadatak kaže | Menjaš |
+|--------------|--------|
+| drugi endpoint (`users`, `comments`) | `ApiService` @GET + model klasa |
+| drugi JSON ključevi | polja u modelu + `@SerializedName` |
+| drugi ID dugmeta/TextView-a | layout + findViewById + field ime |
+| dugme **briše** | listener → `delete` / `obrisi...` |
+| dugme **kreira / dodaje** | listener → `insert` / `dodaj...` |
+| dugme **čuva** | listener → SharedPreferences |
+| HTTP POST umesto GET | `@POST` + `@Body` u ApiService |
+
+---
+
 ## Povezani fajlovi
 
 | Fajl | Za šta |
