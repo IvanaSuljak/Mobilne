@@ -38,8 +38,9 @@ DOBIJEŠ ZADATAK
 |-------|------|-------|
 | **1** | **`VODIC_DAN_KOLOKVIJUMA.md`** | šta radiš, redosled, šema foldera |
 | **2** | **`SABLON_MASTER_VODIC.md`** | tabela: reč u zadatku → koji šablon |
-| **3** | **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** | ako je slično kolokvijumu 2 — gotov kod |
+| **3** | **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** | ako je slično kolokvijumu 2 — gotov kod **bez TODO** |
 | **4** | pojedinačni `SABLON_*.md` | samo za deo koji radiš (Retrofit, layout...) |
+| **?** | **`SABLON_TODO_RECNIK.md`** | ne znaš šta staviti umesto `TODO_...` |
 
 > **Ne otvaraj sve odjednom.** Korak 1 → 2 → onda **jedan** SABLON za deo koji trenutno kucaš.
 

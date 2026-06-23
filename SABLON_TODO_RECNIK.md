@@ -1,0 +1,202 @@
+# REČNIK TODO — šta staviti umesto `TODO_...`
+
+> Kad u šablonu vidiš **`TODO_nešto`** → to **nije** gotov kod.  
+> Moraš zameniti vrednošću iz **teksta zadatka** ili iz **svog layouta**.
+
+**Pravilo:** posle zamene **nigde ne sme** da ostane reč `TODO` u kodu.
+
+---
+
+## Odakle uzimaš vrednost (3 izvora)
+
+| Izvor | Primer |
+|-------|--------|
+| **Tekst zadatka** | URL sajta, ime tabele, „žiroskop“, „prvih 10 postova“ |
+| **Tvoj layout XML** | `@+id/lokacijaTextView` → u Javi `R.id.lokacijaTextView` |
+| **JSON / API** | polja iz zadatka: `title`, `body`, `comment_count` |
+
+Ne izmišljaj — ako zadatak kaže `lokacijaTextView`, koristi tačno to.
+
+---
+
+## Kolokvijum 2 — gotove vrednosti (kopiraj ove)
+
+| TODO u šablonu | Stavi ovo (kolokvijum 2) |
+|----------------|--------------------------|
+| `TODO_IME_PAKETA` | `com.example.kolokvijum2` |
+| `TODO_Activity` | **ignoriši** — koristi `MainActivity` |
+| `TODO_textView` (lokacija) | `lokacijaTextView` |
+| `TODO_imageButton` | `kameraImageButton` |
+| `TODO_imageView` | `slikaImageView` |
+| `TODO_switch` | `postSwitch` |
+| `TODO_button` / dugme | `obrisiButton` |
+| `TODO_TIP_SENZORA` (Toast posle slike) | `Sensor.TYPE_GYROSCOPE` |
+| `TODO_TIP_SENZORA` (tekst na dugmetu) | `Sensor.TYPE_ACCELEROMETER` |
+| `TODO_BASE_URL` | `https://app.beeceptor.com/mock-server/dummy-json/` |
+| `TODO_endpoint` | `posts` |
+| `TODO_Model` / `TODO_ImeKlase` | `Post` |
+| `TODO_tabela` | `postovi` |
+| `TODO_ime_baze` | `kolokvijum2.db` |
+
+---
+
+## Svi TODO — šta znači i šta staviš
+
+### Paket i klase
+
+| TODO | Gde | Šta staviš | Primer |
+|------|-----|------------|--------|
+| `TODO_IME_PAKETA` | `package com.example....` | paket projekta | `com.example.kolokvijum2` |
+| `TODO_Activity` | `public class ...` | ime **nove** Activity | `MapsActivity` — **na kolokvijumu ignoriši** |
+| `TODO_KameraActivity` | senzori šablon | **ne pravi** — kod ide u MainActivity | — |
+| `TODO_Model` / `TODO_ImeKlase` | model klasa | ime iz zadatka | `Post`, `Student`, `Proizvod` |
+| `TODO_NovaActivity` | Manifest | ime novog ekrana | `SettingsActivity` |
+
+### Layout — ID-evi (XML i Java moraju biti ISTI)
+
+| TODO | Gde | Šta staviš | Odakle |
+|------|-----|------------|--------|
+| `TODO_textView` | `android:id` + findViewById | smislen ID | zadatak ili smisli: `lokacijaTextView` |
+| `TODO_imageButton` | isto | npr. `kameraImageButton` | layout |
+| `TODO_imageView` | isto | npr. `slikaImageView` | layout |
+| `TODO_switch` | isto | npr. `postSwitch` | layout |
+| `TODO_button` | isto | npr. `obrisiButton` | layout |
+| `TODO_editText` | isto | npr. `emailEditText` | layout |
+| `TODO_listView` | isto | npr. `kontaktiListView` | layout |
+| `TODO_pocetni_tekst` | `android:text` | početni tekst na ekranu | npr. `"Lokacija"` |
+| `TODO_labela` | Switch/CheckBox text | labela pored elementa | npr. `"Ucitaj postove"` |
+| `TODO_opis` | contentDescription | kratak opis (pristupačnost) | `"Kamera"` |
+| `activity_TODO_mapa.xml` | ime layout fajla | npr. `activity_maps.xml` | — |
+
+**Pravilo ID-a:** u XML `@+id/lokacijaTextView` → u Javi `R.id.lokacijaTextView` i field `lokacijaTextView`.
+
+### GPS i mapa
+
+| TODO | Šta staviš | Primer |
+|------|------------|--------|
+| `TODO_lat` | geografska širina | `44.8176` |
+| `TODO_lng` | geografska dužina | `20.4569` |
+| `YOUR_API_KEY_OVDE` | Google Maps ključ | samo ako ima **mapu** |
+
+### Senzori
+
+| TODO | Šta staviš | Kada |
+|------|------------|------|
+| `TODO_TIP_SENZORA` | `Sensor.TYPE_GYROSCOPE` | žiroskop (Toast posle slike) |
+| `TODO_TIP_SENZORA` | `Sensor.TYPE_ACCELEROMETER` | akcelerometar (tekst dugmeta) |
+| `TODO_TIP_SENZORA` | `Sensor.TYPE_LIGHT` | itd. — **tačno ono što zadatak kaže** |
+
+### Retrofit / API
+
+| TODO | Šta staviš | Odakle |
+|------|------------|--------|
+| `TODO_BASE_URL` | adresa servera, **sa `/` na kraju** | tekst zadatka |
+| `TODO_endpoint` | putanja bez base URL | `"posts"`, `"users"` |
+| `TODO_polje1`, `TODO_atribut1` | JSON ključ = Java polje | `title`, `body` |
+| `TODO_polje2` | drugo polje | `body`, `email` |
+| `comment_count` | `@SerializedName("comment_count")` | kad JSON ima `_` |
+
+**Primer zamene u Post.java:**
+
+```java
+// ❌ šablon
+@SerializedName("TODO_polje1")
+private String TODO_atribut1;
+
+// ✅ kolokvijum 2
+private String title;   // JSON već kaže "title" — anotacija ne treba
+```
+
+### SQLite / baza
+
+| TODO | Šta staviš | Primer |
+|------|------------|--------|
+| `TODO_ime_baze` | ime .db fajla | `kolokvijum2.db` |
+| `TODO_tabela` | ime tabele | `postovi` |
+| `TODO_kolona1` | kolona u CREATE TABLE | `title`, `ime` |
+| `TODO_kolona2` | druga kolona | `body`, `email` |
+| `TODO_polje1` | polje u model klasi | isto ime kao kolona |
+| `TODO_default_uloga` | default vrednost | `"korisnik"` — samo ako ima uloge |
+
+### SharedPreferences / navigacija (vežbe sa loginom)
+
+| TODO | Šta staviš |
+|------|------------|
+| `TODO_AppPrefs` | ime fajla prefs | `"AppPrefs"` |
+| `TODO_uloga1`, `TODO_uloga2` | vrednosti uloga | `"vozac"`, `"putnik"` |
+| `TODO_Ekran1Activity` | ime Activity za navigaciju | `HomeActivity` |
+| `TODO_ImeServisa` | ime Service klase | `SyncService` |
+
+---
+
+## Šta IGNORISATI na kolokvijumu
+
+| TODO / linija | Zašto |
+|---------------|--------|
+| `public class TODO_Activity` | ne praviš novu klasu — sve u MainActivity |
+| `<activity android:name=".TODO_Activity"/>` | MainActivity već u Manifest-u |
+| `TODO_Ekran1Activity`, login navigacija | nema više ekrana na kolokvijumu |
+| `TODO_KameraActivity` | kamera ide u MainActivity |
+
+---
+
+## Primer — pre i posle (layout + Java)
+
+**Zadatak kaže:** „TextView sa id lokacijaTextView za GPS“
+
+```xml
+<!-- ❌ -->
+android:id="@+id/TODO_textView"
+
+<!-- ✅ -->
+android:id="@+id/lokacijaTextView"
+```
+
+```java
+// ❌
+private TextView TODO_textView;
+TODO_textView = findViewById(R.id.TODO_textView);
+
+// ✅
+private TextView lokacijaTextView;
+lokacijaTextView = findViewById(R.id.lokacijaTextView);
+```
+
+---
+
+## Primer — Retrofit
+
+**Zadatak kaže:** „GET sa https://app.beeceptor.com/mock-server/dummy-json/posts“
+
+```java
+// ❌
+private static final String BASE_URL = "TODO_BASE_URL";
+@GET("TODO_endpoint")
+
+// ✅
+private static final String BASE_URL =
+        "https://app.beeceptor.com/mock-server/dummy-json/";
+@GET("posts")
+```
+
+---
+
+## Brza provera pre predaje
+
+- [ ] Nema reči `TODO` nigde u projektu (Search in Files → `TODO`)
+- [ ] Svaki `findViewById(R.id.xxx)` — `xxx` postoji u layout XML
+- [ ] `package` isti u svim Java fajlovima (osim `network` — ima `.network` na kraju)
+- [ ] BASE_URL se završava sa `/`
+- [ ] Senzor tip tačno onaj iz zadatka (gyro vs accel)
+
+---
+
+## Povezani fajlovi
+
+| Fajl | Za šta |
+|------|--------|
+| `VODIC_DAN_KOLOKVIJUMA.md` | dan kolokvijuma — redosled |
+| `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md` | kolokvijum 2 **bez** TODO — gotov kod |
+| `SABLON_UNIVERZALNO_VS_KONKRETNO.md` | šta kopiraš vs menjaš |
+
+> **Savet:** za kolokvijum 2 otvori **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** — tamo nema TODO, sve je već zamenjeno.
