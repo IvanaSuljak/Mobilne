@@ -1,6 +1,7 @@
 # ŠABLON — Kolokvijum 2 (primer — sve u jednoj MainActivity)
 
-> **Jednostavan vodič (preporučeno):** `VODIC_KOLOKVIJUM_JEDNOSTAVNO.md` — šta ide u koji fajl, TODO objašnjenja, gotov kod za zadatke 6–9.  
+> **Jednostavan vodič:** `VODIC_KOLOKVIJUM_JEDNOSTAVNO.md`  
+> **Celo urađeno rešenje (svaka klasa):** `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`  
 > **MASTER:** `SABLON_MASTER_VODIC.md` — opšti redosled.
 
 > **NAJVAŽNIJE PRAVILO:** Jedna klasa `MainActivity`. Kod iz drugih šablona ubacuješ kao metode/field-ove.

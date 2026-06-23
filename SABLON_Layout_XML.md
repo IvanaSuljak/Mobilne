@@ -23,7 +23,7 @@ Pročitaj zadatak — ako vidiš bilo šta od ovoga, koristi ovaj šablon **PRVI
 | # | Gde | Šta radiš | Kad |
 |---|-----|-----------|-----|
 | 1 | `res/layout/activity_main.xml` | Otvori ili kreiraj layout fajl | Odmah posle novog projekta |
-| 2 | Isti fajl | `<LinearLayout orientation="vertical">` ako piše "jedno ispod drugog" | Pre elemenata |
+| 2 | Isti fajl | Raspored: `vertical` / `horizontal` / ugnježdeni layout — vidi sekciju **"Ako NE piše jedno ispod drugog"** | Pre elemenata |
 | 3 | Isti fajl | Kopiraj blok iz tablice ispod za svaki element | Za svaki element iz zadatka |
 | 4 | Isti fajl | Zameni `TODO_...` sa smislenim ID (npr. `lokacijaTextView`) | Posle kopiranja |
 | 5 | `MainActivity.java` | `setContentView(R.layout.activity_main)` | U onCreate |
@@ -64,6 +64,123 @@ Pročitaj zadatak — ako vidiš bilo šta od ovoga, koristi ovaj šablon **PRVI
     <!-- OVDE STAVLJAŠ ELEMENTE JEDAN ISPOD DRUGOG -->
 
 </LinearLayout>
+```
+
+---
+
+## Ako NE piše "jedno ispod drugog" — kako rasporediti
+
+> **Važno:** menja se **samo XML layout**.  
+> **MainActivity, ID-evi i logika ostaju isti** — `findViewById(R.id.lokacijaTextView)` ne zavisi od vertical/horizontal.
+
+### Pročitaj zadatak → izaberi raspored
+
+| Zadatak kaže | Šta staviš u XML |
+|--------------|----------------|
+| "jedno ispod drugog", "vertikalno" | `android:orientation="vertical"` na korenskom `LinearLayout` |
+| "jedno pored drugog", "u redu", "horizontalno" | `android:orientation="horizontal"` |
+| "levo/desno", "gore/dole" (tačne pozicije) | `ConstraintLayout` ili `RelativeLayout` |
+| "dve kolone" | dva ugnježdena `LinearLayout` (vidi primer ispod) |
+| Samo nabraja elemente, **bez** rasporeda | koristi **vertical** — najjednostavnije i uvek ok |
+
+### Šta se NE menja kad menjaš raspored
+
+| Ostaje isto | Zašto |
+|-------------|--------|
+| `@+id/...` na svakom elementu | Java traži elemente po ID-u |
+| Koji elementi postoje (TextView, Switch...) | zadatak traži iste funkcije |
+| Sav kod u `MainActivity.java` | ne zavisi od `orientation` |
+
+---
+
+### VARIJANTA A — horizontal (pored sebe)
+
+Korenski layout može ostati **vertical**, a samo deo elemenata stavi u horizontal `LinearLayout`:
+
+```xml
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="16dp"
+    ...>
+
+    <TextView android:id="@+id/lokacijaTextView" ... />
+
+    <!-- ova dva PORED sebe -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/kameraImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ... />
+
+        <ImageView
+            android:id="@+id/slikaImageView"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            ... />
+    </LinearLayout>
+
+    <Switch android:id="@+id/postSwitch" ... />
+    <Button android:id="@+id/obrisiButton" ... />
+
+</LinearLayout>
+```
+
+> `layout_weight="1"` na ImageView = zauzmi preostali prostor pored dugmeta.
+
+---
+
+### VARIJANTA B — dve kolone
+
+```xml
+<LinearLayout android:orientation="horizontal" ...>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1">
+        <!-- leva kolona -->
+        <TextView android:id="@+id/lokacijaTextView" ... />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1">
+        <!-- desna kolona -->
+        <Switch android:id="@+id/postSwitch" ... />
+        <Button android:id="@+id/obrisiButton" ... />
+    </LinearLayout>
+
+</LinearLayout>
+```
+
+---
+
+### VARIJANTA C — ništa ne piše o rasporedu
+
+**Default:** koristi **vertical** kao u Kolokvijumu 2 — brzo, jasno, profesor retko traži nešto drugo ako ne napiše eksplicitno.
+
+```
+1. LinearLayout vertical + padding 16dp
+2. Elementi redom iz zadatka
+3. layout_marginBottom="12dp" između elemenata
+```
+
+---
+
+### Brza odluka (flowchart u tekstu)
+
+```
+Piše "ispod" / "vertikalno"?     → vertical
+Piše "pored" / "u redu"?         → horizontal (celo ili deo)
+Piše pozicije (levo od, ispod)?  → ConstraintLayout (vežbe 4+)
+Ne piše ništa?                   → vertical (default)
 ```
 
 ---
@@ -310,6 +427,8 @@ import android.widget.Button;
 | ImageView (slika) | `slikaImageView` | `slikaImageView` |
 | Switch | `postSwitch` | `postSwitch` |
 | Button | `obrisiButton` | `obrisiButton` |
+
+> **Raspored** (vertical/horizontal): menja se samo u XML-u — sekcija **"Ako NE piše jedno ispod drugog"** gore u ovom fajlu. ID-evi i MainActivity ostaju isti.
 
 > **GREŠKA:** Ne piši `};` na kraju onCreate — samo `}` zatvara metodu.
 

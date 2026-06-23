@@ -45,7 +45,7 @@ U šablonima `TODO` = **zameni svojim podatkom**.
 
 | Fajl | Gde u Android Studiju | Šta mora da sadrži (Kolokvijum 2) |
 |------|------------------------|-----------------------------------|
-| `activity_main.xml` | `res/layout/` | TextView, ImageButton, ImageView, Switch, Button (vertikalno) |
+| `activity_main.xml` | `res/layout/` | TextView, ImageButton, ImageView, Switch, Button (vertikalno po defaultu; vidi `SABLON_Layout_XML.md` ako nije „ispod“) |
 | `build.gradle (Module :app)` | Gradle Scripts | `location` + `retrofit` + `gson` + `logging` → **Sync** |
 | `AndroidManifest.xml` | `app/src/main/` | Dozvole PRE `<application>`; FileProvider UNUTAR `<application>` |
 | `file_paths.xml` | `res/xml/` | `<paths>` za kameru |
