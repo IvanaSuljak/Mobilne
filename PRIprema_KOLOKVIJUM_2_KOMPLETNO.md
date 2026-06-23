@@ -8,6 +8,8 @@
 
 ## Pregled — koji fajl služi čemu
 
+> **Puna šema foldera:** `VODIC_DAN_KOLOKVIJUMA.md` → „Šema — gde koji fajl ide“
+
 | Fajl | Zbog kojih zadataka | U jednoj rečenici |
 |------|---------------------|-------------------|
 | `activity_main.xml` | 2 | 5 UI elementa na ekranu (raspored: vidi `SABLON_Layout_XML.md`) |

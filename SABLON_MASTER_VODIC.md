@@ -52,6 +52,12 @@ Kad zadatak traži GPS + kameru + senzor, **ne lepiš cele KORAK blokove** — s
 
 ---
 
+---
+
+## Mapa fajlova — šta ide gde
+
+> **Puna šema foldera (drvo + Android Studio panel + dijagram):** `VODIC_DAN_KOLOKVIJUMA.md` → sekcija **„Šema — gde koji fajl ide“**
+
 | Fajl | Putanja u Android Studiju | Šta ide unutra |
 |------|---------------------------|----------------|
 | Layout | `res/layout/activity_main.xml` | UI elementi (TextView, Button...) |
@@ -63,6 +69,20 @@ Kad zadatak traži GPS + kameru + senzor, **ne lepiš cele KORAK blokove** — s
 | Baza | `java/.../DatabaseHelper.java` | glavni paket — SQLite CRUD |
 | API | `java/.../network/ApiService.java` | paket **network** — Interface |
 | API klijent | `java/.../network/RetrofitClient.java` | paket **network** — BASE_URL |
+
+### Brzo drvo (kolokvijum 2 — sve)
+
+```
+app/build.gradle (Module :app)
+app/src/main/AndroidManifest.xml
+app/src/main/res/layout/activity_main.xml
+app/src/main/res/xml/file_paths.xml
+app/src/main/java/com/example/kolokvijum2/MainActivity.java
+app/src/main/java/com/example/kolokvijum2/Post.java
+app/src/main/java/com/example/kolokvijum2/DatabaseHelper.java
+app/src/main/java/com/example/kolokvijum2/network/ApiService.java
+app/src/main/java/com/example/kolokvijum2/network/RetrofitClient.java
+```
 
 ---
 

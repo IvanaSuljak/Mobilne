@@ -9,6 +9,144 @@
 
 ---
 
+## Šema — gde koji fajl ide (ceo kolokvijum)
+
+> **Paket** u primeru: `com.example.kolokvijum2` — zameni sa svojim ako zadatak kaže drugačije.
+
+### Drvo foldera (kako projekat izgleda na disku)
+
+```
+Kolokvijum2/                              ← root projekta (otvori OVAJ folder u Android Studio)
+│
+├── app/                                  ← modul aplikacije
+│   │
+│   ├── build.gradle                      ← Gradle Module :app  ★ ZADACI 3, 5
+│   │
+│   └── src/main/
+│       │
+│       ├── AndroidManifest.xml           ← dozvole + MainActivity + FileProvider  ★ 3,4,5,7,9
+│       │
+│       ├── java/com/example/kolokvijum2/
+│       │   │
+│       │   ├── MainActivity.java         ← SVE: GPS, kamera, senzori, Switch...  ★ 2–9
+│       │   ├── Post.java                 ← model JSON sa API-ja  ★ 5, 6
+│       │   ├── DatabaseHelper.java       ← SQLite baza postova  ★ 5, 6, 7
+│       │   │
+│       │   └── network/                  ← desni klik → New → Package → "network"
+│       │       ├── ApiService.java       ← Interface, @GET("posts")  ★ 5, 6
+│       │       └── RetrofitClient.java   ← BASE_URL servera  ★ 5, 6
+│       │
+│       └── res/
+│           ├── layout/
+│           │   └── activity_main.xml   ← UI: TextView, Switch, Button...  ★ 2
+│           │
+│           └── xml/
+│               └── file_paths.xml        ← FileProvider putanje (kamera)  ★ 4
+│
+├── build.gradle                          ← root — NE diraj dependencies ovde!
+└── settings.gradle
+```
+
+### Gde to vidiš u Android Studiju (levi panel)
+
+```
+Android (view)
+├── app
+│   ├── manifests
+│   │   └── AndroidManifest.xml
+│   ├── java
+│   │   └── com.example.kolokvijum2
+│   │       ├── MainActivity
+│   │       ├── Post
+│   │       ├── DatabaseHelper
+│   │       └── network
+│   │           ├── ApiService
+│   │           └── RetrofitClient
+│   └── res
+│       ├── layout
+│       │   └── activity_main.xml
+│       └── xml
+│           └── file_paths.xml
+│
+└── Gradle Scripts
+    └── build.gradle (Module :app)    ← ovde dependencies + Sync Now
+```
+
+### Mermaid — fajl → zadatak
+
+```mermaid
+flowchart TB
+    subgraph gradle [Gradle Module app]
+        BG["build.gradle\nlocation + retrofit"]
+    end
+
+    subgraph manifest [app/src/main]
+        M["AndroidManifest.xml\ndozvole + provider"]
+    end
+
+    subgraph res [res/]
+        L["layout/activity_main.xml\nUI elementi"]
+        X["xml/file_paths.xml\nkamera"]
+    end
+
+    subgraph java [java/.../kolokvijum2/]
+        MA["MainActivity.java\nGPS kamera senzori Switch"]
+        P["Post.java\nmodel"]
+        DB["DatabaseHelper.java\nSQLite"]
+        subgraph net [network/]
+            API["ApiService.java"]
+            RC["RetrofitClient.java"]
+        end
+    end
+
+    BG --> MA
+    M --> MA
+    L --> MA
+    X --> MA
+    P --> DB
+    P --> API
+    API --> RC
+    RC --> MA
+    DB --> MA
+```
+
+### Tabela — putanja → šta ide unutra → zadatak
+
+| Putanja (od `app/`) | Fajl | Šta ide unutra | Zadatak |
+|---------------------|------|----------------|---------|
+| `build.gradle` | Module :app | `play-services-location`, retrofit, gson | 3, 5 |
+| `src/main/AndroidManifest.xml` | Manifest | INTERNET, GPS, CAMERA, CONTACTS, NOTIFICATIONS, FileProvider | 3–5, 7, 9 |
+| `src/main/res/layout/activity_main.xml` | Layout | TextView, ImageButton, ImageView, Switch, Button + `@+id/...` | 2 |
+| `src/main/res/xml/file_paths.xml` | XML resurs | `<external-files-path>` za slike | 4 |
+| `src/main/java/.../MainActivity.java` | Activity | sav Java kod — jedna klasa | 2–9 |
+| `src/main/java/.../Post.java` | Model | polja iz JSON + `@SerializedName` | 5, 6 |
+| `src/main/java/.../DatabaseHelper.java` | SQLite | tabela `postovi`, dodaj/obriši/prvi | 5–7 |
+| `src/main/java/.../network/ApiService.java` | Interface | `@GET("posts")` | 5, 6 |
+| `src/main/java/.../network/RetrofitClient.java` | Singleton | BASE_URL sa `/` na kraju | 5, 6 |
+
+### Šta NE praviš (češta greška)
+
+| ❌ Ne pravi | ✅ Umesto toga |
+|------------|----------------|
+| `MapsActivity.java` | sve u `MainActivity.java` |
+| `RetrofitActivity.java` | sve u `MainActivity.java` |
+| `model/Post.java` podpaket (nije obavezno) | `Post.java` u glavnom paketu pored MainActivity |
+| dependencies u root `build.gradle` | samo u `build.gradle (Module :app)` |
+| `<paths>` u Manifest-u | `res/xml/file_paths.xml` |
+
+### Ako zadatak traži SAMO deo (ne sve)
+
+| Zadatak traži | Otvori / napravi samo |
+|---------------|------------------------|
+| Samo layout | `res/layout/activity_main.xml` + findViewById u MainActivity |
+| Samo GPS | Gradle location + Manifest GPS + metode u MainActivity |
+| Samo kamera | Manifest + `file_paths.xml` + launcher u MainActivity |
+| Samo Retrofit | Gradle + Manifest INTERNET + Post + network + enqueue u MainActivity |
+| Samo baza | Post + DatabaseHelper + `dbHelper` u MainActivity |
+| Sve kao kolokvijum 2 | **ceo drvo** iznad |
+
+---
+
 ## Korak 0 — kad dobiješ zadatak (5 minuta, bez kucanja)
 
 1. **Pročitaj CEo tekst** — ne kreni odmah u Android Studio.
