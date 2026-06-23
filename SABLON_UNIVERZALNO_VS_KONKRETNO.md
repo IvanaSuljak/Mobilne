@@ -172,6 +172,39 @@
 
 ---
 
+## Da — nije samo primer kolokvijuma / vežbe
+
+Šabloni nisu **jedan fiksni zadatak**. Kolokvijum 2 i vežbe su **primeri**.  
+Obrazac ostaje isti; **tekst novog zadatka** kaže šta tačno menjaš.
+
+| Zadatak može tražiti (drugačije od primera) | Gde je pokriveno | Šta menjaš |
+|---------------------------------------------|------------------|------------|
+| Drugi ID dugmeta (`kreirajButton`, `sacuvajButton`…) | `SABLON_TODO_RECNIK.md` | layout + findViewById + listener logika |
+| Drugi model (`User`, `Comment`, `Proizvod`) | Retrofit KORAK 2–3, TODO rečnik | klasa + polja iz JSON-a |
+| Drugi endpoint (`users`, `comments`, ne `posts`) | `SABLON_Retrofit_...md` ApiService | `@GET("...")` + `Call<List<...>>` |
+| GET jedan objekat po ID (ne lista) | Retrofit varijanta **A** | `Call<Post>` + `@Path` |
+| GET lista → Toast broj | Retrofit varijanta **B** | `.size()` |
+| GET lista → TextView petlja | Retrofit varijanta **C** | for petlja |
+| GET lista → SQLite | Retrofit varijanta **D** | `dbHelper.dodaj...` |
+| HTTP **POST** (ne GET) | Retrofit brza referenca | `@POST` + `@Body` |
+| Samo GPS (bez mape) | Lokacija **KORAK 1b** | — |
+| GPS **+** Google Maps | Lokacija KORAK 1–4 | API ključ, fragment |
+| Layout **pored** sebe, ne ispod | `SABLON_Layout_XML.md` | `orientation="horizontal"` |
+| Samo kamera (bez senzora) | Senzori KORAK 1, 2, 5 | — |
+| Samo senzor (bez kamere) | Senzori KORAK 3 | tip senzora iz zadatka |
+| Shake detekcija | Senzori KORAK 4 | — |
+| Baza bez Retrofit-a | SQLite KORAK 1–2 | tabela/kolone iz zadatka |
+| Retrofit bez baze | Retrofit KORAK 1–5 A/B/C | — |
+| SharedPreferences bez baze | SQLite KORAK 3 | ključ iz zadatka |
+| Kontakti (prvi / svi) | SQLite KORAK 6 | query |
+| Više ekrana (retko) | TODO rečnik | `TODO_Activity` → prava klasa |
+| Jedan ekran (kolokvijum) | MASTER Pravilo 1 | uvek **MainActivity** |
+
+**Primeri sa konkretnim imenima:** `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`  
+**Kad zadatak kaže nešto treće:** `SABLON_TODO_RECNIK.md` → „Kad zadatak kaže drugačije“
+
+---
+
 ## Najčešća greška
 
 | ❌ Pomešano | ✅ Ispravno |
@@ -192,3 +225,4 @@
 | **`SABLON_UNIVERZALNO_VS_KONKRETNO.md`** | **ovaj fajl — šta kopiraš vs šta menjaš** |
 | `SABLON_Retrofit_HTTP_Zahtevi.md` | Retrofit detalji + varijante A–D |
 | `SABLON_KOLOKVIJUM_2.md` | checklist zadataka 1–9 |
+| `SABLON_TODO_RECNIK.md` | šta staviti umesto TODO + varijacije imena |
