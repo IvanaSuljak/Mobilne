@@ -1,11 +1,47 @@
 # VODIČ — kako se ponašati na dan kolokvijuma
 
-> **Otvori ovaj fajl kad dobiješ zadatak.** Ne učiš sve napamet — znaš **gde da gledaš**.
+> **PRVO OTVORI OVAJ FAJL** kad dobiješ zadatak na kolokvijumu.
 
-**Povezani fajlovi:**
-- Brzi pregled: `VODIC_KOLOKVIJUM_JEDNOSTAVNO.md`
-- Celo rešenje (primer): `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`
-- Mapa šablona: `SABLON_MASTER_VODIC.md`
+---
+
+## PRVO OTVORI — redosled MD fajlova
+
+```
+DOBIJEŠ ZADATAK
+      │
+      ▼
+┌─────────────────────────────────────┐
+│  1. VODIC_DAN_KOLOKVIJUMA.md        │  ← TI SI OVDE (pročitaj zadatak, podvuci reči)
+└─────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────┐
+│  2. SABLON_MASTER_VODIC.md          │  ← nađi reč iz zadatka u tabeli → vidi koji šablon
+└─────────────────────────────────────┘
+      │
+      ├── slično kolokvijumu 2 (GPS+kamera+baza+Retrofit)?
+      │         ▼
+      │   PRIprema_KOLOKVIJUM_2_KOMPLETNO.md  ← ceo kod, fajl po fajl
+      │
+      ├── treba brzo, nešto zaboravila?
+      │         ▼
+      │   VODIC_KOLOKVIJUM_JEDNOSTAVNO.md
+      │
+      └── samo jedan deo (npr. samo Retrofit)?
+                ▼
+            SABLON_Retrofit_...md  (ili Layout, Senzori, SQLite...)
+```
+
+### U jednoj rečenici
+
+| Korak | Fajl | Zašto |
+|-------|------|-------|
+| **1** | **`VODIC_DAN_KOLOKVIJUMA.md`** | šta radiš, redosled, šema foldera |
+| **2** | **`SABLON_MASTER_VODIC.md`** | tabela: reč u zadatku → koji šablon |
+| **3** | **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** | ako je slično kolokvijumu 2 — gotov kod |
+| **4** | pojedinačni `SABLON_*.md` | samo za deo koji radiš (Retrofit, layout...) |
+
+> **Ne otvaraj sve odjednom.** Korak 1 → 2 → onda **jedan** SABLON za deo koji trenutno kucaš.
 
 ---
 
