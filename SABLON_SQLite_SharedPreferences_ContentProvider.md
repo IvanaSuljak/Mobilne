@@ -1,7 +1,51 @@
-# ŠABLON ZA KOLOKVIJUM — Popuni svoje podatke
+# ŠABLON — SQLite, SharedPreferences, ContentProvider
+
+> **MASTER:** Otvori prvo `SABLON_MASTER_VODIC.md` → nađi "baza", "SharedPreferences" ili "kontakti".
 
 > Svuda gde vidiš `TODO` → zameni sa svojim nazivima.
 > Sve ostalo kopiraš bukvalno.
+
+---
+
+## KADA KORISTITI
+
+| Zadatak kaže | Koristi KORAK |
+|--------------|---------------|
+| SQLite, baza, tabela, CRUD, upiši/obriši/čitaj | KORAK 1 + KORAK 2 |
+| SharedPreferences, sačuvaj vrednost, sesija, podešavanja | KORAK 3 |
+| Navigacija po ulozi (admin/vozač/putnik) | KORAK 4 |
+| Interval sinhronizacije, RadioGroup | KORAK 5 |
+| ContentProvider, kontakti, Contacts aplikacija | KORAK 6 |
+| Nova Activity u Manifest-u | KORAK 7 |
+| Odjava korisnika | KORAK 8 |
+
+---
+
+## TAČAN REDOSLED — SQLite (baza)
+
+| # | Gde | Šta radiš | Kad |
+|---|-----|-----------|-----|
+| 1 | `java/.../Post.java` (ili drugi model) | Model klasa sa poljima (KORAK 1) | Pre DatabaseHelper |
+| 2 | `java/.../DatabaseHelper.java` | Tabela, CRUD metode (KORAK 2) | Posle modela |
+| 3 | `MainActivity.java` | `dbHelper = DatabaseHelper.getInstance(this)` | u onCreate |
+| 4 | `MainActivity.java` | `dbHelper.dodaj()` / `getSve()` / `obrisi()` | U listenerima |
+
+## TAČAN REDOSLED — SharedPreferences
+
+| # | Gde | Šta | Kad |
+|---|-----|-----|-----|
+| 1 | `SharedPreferencesManager.java` ili direktno u Activity | KORAK 3 | Kad zadatak kaže "sačuvaj u SharedPreferences" |
+| 2 | `MainActivity.java` | `prefs.edit().putString("kljuc", vrednost).apply()` | U Switch OFF ili dugmetu |
+
+## TAČAN REDOSLED — ContentProvider (kontakti)
+
+| # | Gde | Šta | Kad |
+|---|-----|-----|-----|
+| 1 | `AndroidManifest.xml` | `READ_CONTACTS` pre `<application>` | Pre koda |
+| 2 | `MainActivity.java` | `provjeriDozvolu()` → `ucitajKontakte()` (KORAK 6) | U listeneru ili onCreate |
+| 3 | `MainActivity.java` | `getContentResolver().query(...)` | Unutar ucitajKontakte |
+
+> Gradle dependency **ne treba** za SQLite, SharedPreferences ni ContentProvider.
 
 ---
 
@@ -473,6 +517,55 @@ logoutButton.setOnClickListener(v -> {
 | Email kontakata | `ContactsContract.CommonDataKinds.Email` | `.CONTENT_URI` |
 | Kalendar | `CalendarContract.Events` | `.CONTENT_URI` |
 | Slike/Video | `MediaStore.Images.Media` | `.EXTERNAL_CONTENT_URI` |
+
+---
+
+## Kolokvijum 2 — DatabaseHelper za postove (tabela `postovi`)
+
+**Fajl:** `DatabaseHelper.java` u glavnom paketu (pored `Post.java`)
+
+Ključne metode za zadatke 6–7:
+
+| Metoda | Za šta (zadatak) |
+|--------|------------------|
+| `dodajPost(Post p)` | Zadatak 6 — upiši post iz API-ja u bazu |
+| `getSviPostovi()` | Lista svih postova iz baze |
+| `getPrviPost()` | Zadatak 6 — prvi red u tabeli (ORDER BY id ASC LIMIT 1) |
+| `obrisiPrviPost()` | Zadatak 7 — obriši prvi red, vrati `false` ako je prazno |
+
+```java
+// CREATE TABLE
+"CREATE TABLE postovi (" +
+"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+"userId INTEGER, title TEXT, body TEXT, link TEXT, comment_count INTEGER)"
+
+// dodajPost — ContentValues iz Post objekta
+public long dodajPost(Post post) {
+    ContentValues v = new ContentValues();
+    v.put("userId", post.getUserId());
+    v.put("title", post.getTitle());
+    v.put("body", post.getBody());
+    v.put("link", post.getLink());
+    v.put("comment_count", post.getCommentCount());
+    return db.insert("postovi", null, v);
+}
+
+// getPrviPost — NE po id=1, već prvi u tabeli!
+Cursor c = db.query("postovi", null, null, null, null, null, "id ASC", "1");
+
+// obrisiPrviPost
+Post prvi = getPrviPost();
+if (prvi == null) return false;  // → zadatak 7: notifikacija
+db.delete("postovi", "id=?", new String[]{String.valueOf(prvi.getId())});
+return true;
+```
+
+U MainActivity:
+```java
+dbHelper = DatabaseHelper.getInstance(this);
+```
+
+> **Zajedno sa Retrofit-om:** vidi `SABLON_Retrofit_...md` sekcija "Kolokvijum 2 — Post model"
 
 ---
 

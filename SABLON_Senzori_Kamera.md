@@ -1,6 +1,49 @@
 # ŠABLON — Senzori i Kamera
 
+> **MASTER:** Otvori prvo `SABLON_MASTER_VODIC.md` → nađi "kamera" ili "senzor" u tabeli.
+
 > `TODO` → zameni sa svojim podacima. Ostalo kopiraš bukvalno.
+
+> **KOLOKVIJUM:** Kod ide u **MainActivity** — metode i field-ovi, NE nova klasa unutar nje!
+> Klasa mora imati `implements SensorEventListener` ako koristiš senzor.
+
+---
+
+## KADA KORISTITI
+
+| Zadatak kaže | Koristi KORAK |
+|--------------|---------------|
+| kamera, fotografija, slika, ImageView, ImageButton | KORAK 1, 2, 5 |
+| senzor, akcelerometar, žiroskop, TYPE_... | KORAK 3 |
+| shake, protresi uređaj | KORAK 4 |
+| Toast sa senzorom pri nekoj akciji | KORAK 3 + Toast u callback-u (kamera launcher) |
+
+---
+
+## TAČAN REDOSLED — Kamera
+
+| # | Gde | Šta radiš | Kad |
+|---|-----|-----------|-----|
+| 1 | `AndroidManifest.xml` | `CAMERA` dozvola **pre** `<application>` | Pre Java koda |
+| 2 | `AndroidManifest.xml` | `<provider FileProvider>` **unutar** `<application>` | Posle activity taga |
+| 3 | `res/xml/file_paths.xml` | Novi fajl sa `<paths>` (KORAK 2) | Posle Manifest-a |
+| 4 | Layout XML | `ImageButton` + `ImageView` sa ID-evima | Pre MainActivity |
+| 5 | `MainActivity.java` | Field: `fotografijUri`, `slikaImageView`, `kameraLauncher` | Vrh klase; launcher VAN onCreate |
+| 6 | `MainActivity.java` | u `onCreate`: findViewById + click listener | Posle setContentView |
+| 7 | `MainActivity.java` | Metoda `otvoriKameru()` (KORAK 5) | Na nivou klase |
+
+## TAČAN REDOSLED — Senzori
+
+| # | Gde | Šta | Kad |
+|---|-----|-----|-----|
+| 1 | `MainActivity.java` | `implements SensorEventListener` na klasi | Deklaracija klase |
+| 2 | `MainActivity.java` | Fields: `sensorManager`, `senzor` (KORAK 3) | Vrh klase |
+| 3 | `MainActivity.java` | u `onCreate`: getSystemService + getDefaultSensor | Posle findViewById |
+| 4 | `MainActivity.java` | `onResume()` → registerListener | Override metoda |
+| 5 | `MainActivity.java` | `onPause()` → unregisterListener | Override metoda |
+| 6 | `MainActivity.java` | `onSensorChanged()` → event.values[] | Override metoda |
+
+> Gradle dependency **ne treba** za senzore i kameru (osim androidx koji već postoji).
 
 ---
 
@@ -15,89 +58,182 @@
 
 ## KORAK 1 — AndroidManifest.xml
 
-```xml
-<!-- Dozvola za kameru -->
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-feature android:name="android.hardware.camera" android:required="false" />
+**Struktura Manifest-a (redosled je bitan!):**
 
-<!-- Unutar <application> — FileProvider za kameru -->
-<provider
-    android:name="androidx.core.content.FileProvider"
-    android:authorities="${applicationId}.fileprovider"
-    android:exported="false"
-    android:grantUriPermissions="true">
-    <meta-data
-        android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/file_paths" />
-</provider>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ...>
+
+    <!-- 1. DOZVOLE — ovde, PRE <application> -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!-- 2. APPLICATION -->
+    <application ...>
+
+        <activity android:name=".MainActivity" ... />
+
+        <!-- 3. FileProvider — UNUTAR <application>, ne posle! -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+</manifest>
 ```
+
+> **NE STAVLJAJ** `<provider>` ili `<uses-permission>` POSLE `</application>` — neće raditi!
 
 ---
 
 ## KORAK 2 — res/xml/file_paths.xml (napravi ovaj fajl)
 
 ```xml
+<?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-files-path name="moje_slike" path="Pictures/" />
 </paths>
 ```
 
+> **Fajl:** `res/xml/file_paths.xml` — desni klik na `res` → New → Android Resource File → Resource type: **xml**
+
 ---
 
-## KORAK 3 — Senzori (Activity sa implements SensorEventListener)
+## ⚠️ NAJVAŽNIJE — Kako koristiti KORAK 3 i KORAK 5
+
+**NE kopiraj ceo blok KORAK 3 odjednom** — ima svoj `onCreate()` i zatvara klasu sa `}`!
+
+Umesto toga, iz šablona uzmi **samo delove** i ubaci u **postojeći** MainActivity:
+
+| Iz šablona uzmi | Gde u MainActivity |
+|-----------------|-------------------|
+| `implements SensorEventListener` | deklaracija klase (jednom) |
+| `private SensorManager...` fields | vrh klase, pored ostalih field-ova |
+| init senzora (2 linije) | **dodaj u postojeći** `onCreate()`, ne novi |
+| `onResume`, `onPause`, `onSensorChanged`, `onAccuracyChanged` | metode na nivou klase |
+| `kameraLauncher`, `otvoriKameru()` | iz KORAK 5 — isto, u istu klasu |
+
+```
+❌ POGREŠNO: nalepi KORAK 3 pa ispod KORAK 5 → dva onCreate, klasa se zatvori prerano
+✅ ISPRAVNO: jedan onCreate, jedna klasa, sve metode jedna pored druge
+```
+
+---
+
+## KORAK 3 — Senzori (delovi za kopiranje, NE cela klasa!)
+
+### 3a — Deklaracija klase (izmeni postojeću liniju)
 
 ```java
-public class TODO_Activity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+```
 
-    private SensorManager sensorManager;
-    private Sensor        senzor;
+### 3b — Fields (dodaj na vrh klase)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.TODO_layout);
+```java
+private SensorManager sensorManager;
+private Sensor ziroskop;  // ili akcelerometar — zavisi od zadatka
+```
 
-        // 1. Uzmi SensorManager
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+**Kolokvijum zadatak 4 (Toast pri slici)** — dodaj i:
+```java
+private float[] ziroskopVrednosti = new float[3];
+```
 
-        // 2. Dobavi senzor (može biti null!)
-        senzor = sensorManager.getDefaultSensor(TODO_TIP_SENZORA);
-        if (senzor == null) {
-            Toast.makeText(this, "Senzor nije dostupan!", Toast.LENGTH_LONG).show();
-        }
+**Zadatak 8 (Button tekst = akcelerometar)** — koristi:
+```java
+private Sensor akcelerometar;
+```
+
+### 3c — Init (dodaj u POSTOJEĆI onCreate, posle findViewById)
+
+```java
+sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+ziroskop = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+if (ziroskop == null) {
+    Toast.makeText(this, "Senzor nije dostupan!", Toast.LENGTH_LONG).show();
+}
+```
+
+Zameni tip senzora po zadatku:
+- žiroskop → `Sensor.TYPE_GYROSCOPE`
+- akcelerometar → `Sensor.TYPE_ACCELEROMETER`
+
+### 3d — Override metode (dodaj u klasu, posle onCreate)
+
+```java
+@Override
+protected void onResume() {
+    super.onResume();
+    if (ziroskop != null) {
+        sensorManager.registerListener(this, ziroskop, SensorManager.SENSOR_DELAY_NORMAL);
     }
+}
 
-    // 3. Registruj u onResume
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (senzor != null) {
-            sensorManager.registerListener(this, senzor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-    }
-
-    // 4. OBAVEZNO odjavi u onPause!
-    @Override
-    protected void onPause() {
-        super.onPause();
+@Override
+protected void onPause() {
+    super.onPause();
+    if (sensorManager != null) {
         sensorManager.unregisterListener(this);
     }
-
-    // 5. Obrada podataka
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == TODO_TIP_SENZORA) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            TODO_textView.setText("X: " + x + "\nY: " + y + "\nZ: " + z);
-        }
-    }
-
-    // 6. Obavezno override
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) { }
 }
+
+@Override
+public void onAccuracyChanged(Sensor sensor, int accuracy) { }
+```
+
+### 3e — onSensorChanged — IZABERI varijantu
+
+**Varijanta A — prikaži u TextView** (vežbe):
+```java
+@Override
+public void onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        float x = event.values[0], y = event.values[1], z = event.values[2];
+        nekiTextView.setText("X: " + x + "\nY: " + y + "\nZ: " + z);
+    }
+}
+```
+
+**Varijanta B — Kolokvijum zadatak 4** (čuvaj vrednosti, Toast u KORAK 5 launcher):
+```java
+@Override
+public void onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        ziroskopVrednosti = event.values.clone();
+    }
+}
+```
+
+**Varijanta C — Kolokvijum zadatak 8** (akcelerometar na Button):
+```java
+@Override
+public void onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        ziroskopVrednosti = event.values.clone();
+    }
+    if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        obrisiButton.setText(String.format("X:%.1f Y:%.1f Z:%.1f",
+                event.values[0], event.values[1], event.values[2]));
+    }
+}
+```
+
+> Varijanta C: u `onResume` registruj oba senzora (dva `registerListener`).
+
+**Importi za senzore:**
+```java
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 ```
 
 ---
@@ -134,49 +270,38 @@ private void detektujShake(float x, float y, float z) {
 
 ---
 
-## KORAK 5 — Kamera (Activity)
+## KORAK 5 — Kamera (ubaci u MainActivity, NE nova klasa!)
+
+> Kopiraj **field-ove, launcher i metode** u MainActivity.
+> NE piši `public class TODO_KameraActivity` unutar MainActivity!
 
 ```java
-public class TODO_KameraActivity extends AppCompatActivity {
+// === U MainActivity — FIELDS ===
+private Uri fotografijUri;
+private ImageView slikaImageView;  // tvoj ID iz layouta
 
-    private Uri     fotografijUri;
-    private ImageView TODO_imageView;
-
-    // Launcher — definiši KAO FIELD, van onCreate()!
-    private final ActivityResultLauncher<Intent> kameraLauncher =
+// === LAUNCHER — FIELD na nivou klase, VAN onCreate! ===
+private final ActivityResultLauncher<Intent> kameraLauncher =
         registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
-                    TODO_imageView.setImageURI(null);
-                    TODO_imageView.setImageURI(fotografijUri); // prikaži sliku
+                    slikaImageView.setImageURI(null);
+                    slikaImageView.setImageURI(fotografijUri);
+                    // Kolokvijum zadatak 4 — Toast sa žiroskopom (Varijanta B iz KORAK 3e):
+                    Toast.makeText(this,
+                            "X: " + ziroskopVrednosti[0] +
+                            " Y: " + ziroskopVrednosti[1] +
+                            " Z: " + ziroskopVrednosti[2],
+                            Toast.LENGTH_LONG).show();
                 }
             });
 
-    private final ActivityResultLauncher<Intent> galerijaLauncher =
-        registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    TODO_imageView.setImageURI(result.getData().getData());
-                }
-            });
+// === u POSTOJEĆI onCreate() — ne pravi novi! ===
+kameraImageButton.setOnClickListener(v -> otvoriKameru());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.TODO_kamera_layout);
-        TODO_imageView = findViewById(R.id.TODO_imageView);
-
-        // Dugmad
-        dugmeSnimi.setOnClickListener(v -> otvoriKameru());
-        dugmeGalerija.setOnClickListener(v -> otvoriGaleriju());
-        dugmeBrisi.setOnClickListener(v -> {
-            TODO_imageView.setImageResource(android.R.drawable.ic_menu_gallery);
-        });
-    }
-
-    private void otvoriKameru() {
+// === METODA na nivou MainActivity ===
+private void otvoriKameru() {
         try {
             String ts  = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
             File   dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -194,14 +319,46 @@ public class TODO_KameraActivity extends AppCompatActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Greška!", Toast.LENGTH_SHORT).show();
         }
-    }
+}
+```
 
-    private void otvoriGaleriju() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        galerijaLauncher.launch(intent);
-    }
+> **Importi koje treba dodati u MainActivity za kameru:**
+> `Intent`, `Uri`, `ImageView`, `ImageButton`, `MediaStore`, `File`, `Environment`,
+> `FileProvider`, `ActivityResultLauncher`, `ActivityResultContracts`,
+> `SimpleDateFormat`, `Date`, `Locale`, `IOException`
+
+---
+
+## ČESTE GREŠKE — ne pravi ugnježdene klase!
+
+| ❌ Greška | ✅ Ispravno |
+|----------|------------|
+| Nalepiš ceo KORAK 3 blok | Uzmi samo delove 3a–3e |
+| Dva `onCreate()` | Jedan — dodaj init senzora u postojeći |
+| `}` posle senzora pa GPS ispod | Sve unutar jedne klase |
+| `TODO_TIP_SENZORA` ostane u kodu | Zameni sa `Sensor.TYPE_GYROSCOPE` |
+| `LokacijaTextView` (pogrešan case) | Java je case-sensitive — `lokacijaTextView` |
+| Žiroskop u TextView umesto Toast | Zadatak 4 → Varijanta B + Toast u launcher |
+
+```java
+// ❌ POGREŠNO — klasa unutar klase
+public class MainActivity extends AppCompatActivity {
+    public class TODO_KameraActivity extends AppCompatActivity { ... }
+}
+
+// ❌ POGREŠNO — dva onCreate
+@Override onCreate() { /* senzor */ }
+@Override onCreate() { /* gps */ }
+
+// ✅ ISPRAVNO — sve u jednoj klasi
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+    // svi fields
+    // kameraLauncher
+    @Override onCreate() { /* findViewById + gps + senzor + kamera */ }
+    private void dohvatiLokaciju() { }
+    private void otvoriKameru() { }
+    @Override onResume() { }
+    @Override onSensorChanged() { }
 }
 ```
 

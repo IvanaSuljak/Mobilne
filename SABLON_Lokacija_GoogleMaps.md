@@ -1,7 +1,41 @@
 # ŠABLON — Lokacija i Google Maps
 
+> **MASTER:** Otvori prvo `SABLON_MASTER_VODIC.md` → nađi "GPS" ili "Maps" u tabeli.
+
 > Svuda gde vidiš `TODO` → zameni sa svojim podacima.
 > Sve ostalo kopiraš bukvalno.
+
+---
+
+## KADA KORISTITI
+
+| Zadatak kaže | Koristi verziju |
+|--------------|-----------------|
+| lat/lng, geografska širina/dužina, lokacija uređaja, GPS | **KORAK 1b** (samo GPS, bez mape) |
+| Google Maps, mapa, marker, kamera na mapi | **KORAK 1–4** (puna verzija + API ključ) |
+
+---
+
+## TAČAN REDOSLED — samo GPS (kolokvijum)
+
+| # | Gde | Šta radiš | Kad |
+|---|-----|-----------|-----|
+| 1 | `build.gradle (Module :app)` | `play-services-location` u `dependencies` | Posle layouta |
+| 2 | Isti fajl | **Sync Now** | Odmah posle dodavanja |
+| 3 | `AndroidManifest.xml` | `ACCESS_FINE_LOCATION` + `ACCESS_COARSE_LOCATION` **pre** `<application>` | Posle Gradle |
+| 4 | Layout XML | TextView sa `android:id="@+id/lokacijaTextView"` | Već urađeno u Layout šablonu |
+| 5 | `MainActivity.java` | Fields: `fusedLocationClient`, `lokacijaTextView` | Na vrhu klase |
+| 6 | `MainActivity.java` | u `onCreate`: init + `dohvatiLokaciju()` | Posle findViewById |
+| 7 | `MainActivity.java` | Metode: `dohvatiLokaciju`, `imaDozvolu`, `zatraziDozvolu`, `onRequestPermissionsResult` | **Na nivou klase**, ne u lambdi |
+
+## TAČAN REDOSLED — sa mapom (Vežba 8)
+
+| # | Gde | Šta | Kad |
+|---|-----|-----|-----|
+| 1–2 | Gradle | location + maps + Sync | Prvo |
+| 3 | Manifest | dozvole + API ključ meta-data | Posle Gradle |
+| 4 | Layout | `<fragment SupportMapFragment>` | Posle Manifest |
+| 5 | Activity | `implements OnMapReadyCallback` + KORAK 4 kod | Posle layouta |
 
 ---
 
@@ -15,14 +49,47 @@
 
 ---
 
-## KORAK 1 — build.gradle
+## KORAK 1 — build.gradle (Module :app)
+
+> **VAŽNO:** dependency ide u **`app/build.gradle`**, NE u root `build.gradle (Project)`!
+>
+> U Android Studiju: levo → **Gradle Scripts** → **`build.gradle (Module :app)`**
+> Posle izmene klikni **Sync Now**.
 
 ```groovy
-// Google Maps SDK
+// Unutar dependencies { } bloka u app/build.gradle:
+
+// Google Maps SDK (samo ako koristiš mapu)
 implementation 'com.google.android.gms:play-services-maps:18.2.0'
-// GPS lokacija
+
+// GPS lokacija (uvek za lat/lng)
 implementation 'com.google.android.gms:play-services-location:21.2.0'
 ```
+
+---
+
+## KORAK 1b — SAMO GPS bez mape (za kolokvijum: lat/lng u TextView)
+
+Ako zadatak traži **samo koordinate u TextView-u** (nema mape), dovoljno je:
+
+**app/build.gradle** — samo ova linija:
+```groovy
+implementation 'com.google.android.gms:play-services-location:21.2.0'
+```
+
+**AndroidManifest.xml** — samo dozvole (bez API ključa):
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+**MainActivity** — kopiraj samo ove delove iz KORAK 4:
+- `private FusedLocationProviderClient fusedLocationClient;`
+- `private TextView TODO_textView;`
+- u `onCreate()`: inicijalizacija + `dohvatiLokaciju();`
+- metode: `dohvatiLokaciju()`, `imaDozvolu()`, `zatraziDozvolu()`, `onRequestPermissionsResult()`
+
+**NE treba ti:** `OnMapReadyCallback`, `googleMap`, `SupportMapFragment`, API ključ.
 
 ---
 
@@ -208,6 +275,16 @@ public class TODO_Activity extends AppCompatActivity implements OnMapReadyCallba
 }
 ```
 
+> **ČESTA GREŠKA:** `imaDozvolu()`, `zatraziDozvolu()` i `onRequestPermissionsResult()`
+> pišu se **na nivou klase** (pored `dohvatiLokaciju()`), NE unutar `{}` lambde
+> `lokacija -> { ... }` i NE unutar `dohvatiLokaciju()`.
+>
+> Lambda se zatvara sa `});` — tek POSLE toga pišeš sledeće metode.
+>
+> **ČESTA GREŠKA 2:** Android Studio ponekad ubaci dupli `if (ActivityCompat.checkSelfPermission...)`
+> posle `imaDozvolu()` — **obriši ga**, dovoljna je samo `imaDozvolu()` provera.
+> Za lint upozorenje dodaj `@SuppressLint("MissingPermission")` iznad `dohvatiLokaciju()`.
+
 ---
 
 ## BONUS — Dodaj marker na fiksnu lokaciju (bez GPS-a)
@@ -251,9 +328,20 @@ private void prikaziAdresu(double lat, double lng) {
 
 ## Redosled koji se NE MENJA
 
+### Samo GPS (kolokvijum — lat/lng u TextView)
 ```
-1. build.gradle       → dodaj play-services-maps + play-services-location
-2. Manifest           → ACCESS_FINE_LOCATION + ACCESS_COARSE_LOCATION + API_KEY meta-data
+1. app/build.gradle (Module :app) → play-services-location + Sync Now
+2. Manifest           → ACCESS_FINE_LOCATION + ACCESS_COARSE_LOCATION
+3. Layout             → TextView sa android:id="@+id/lokacijaTextView"
+4. Activity           → fields + onCreate() + dohvatiLokaciju()
+5. Dozvola            → imaDozvolu() → zatraziDozvolu() → onRequestPermissionsResult()
+   (metode na nivou klase, NE unutar lambde!)
+```
+
+### Sa mapom (Vežba 8)
+```
+1. app/build.gradle (Module :app) → play-services-maps + play-services-location + Sync Now
+2. Manifest           → dozvole + API_KEY meta-data
 3. Layout             → <fragment android:name="...SupportMapFragment">
 4. Activity           → implements OnMapReadyCallback
 5. onCreate()         → FusedLocationProviderClient + mapFragment.getMapAsync(this)
