@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 | Fajl | Za šta |
 |------|--------|
 | **`SABLON_MASTER_VODIC.md`** | **Ovaj fajl — počni ovde** |
+| **`SABLON_MAPA_KLASA.md`** | **Šta ide u koju klasu / fajl — jedna master tabela** |
 | **`SABLON_TODO_RECNIK.md`** | **Šta staviti umesto svakog TODO_...** |
 | **`VODIC_DAN_KOLOKVIJUMA.md`** | **Dan kolokvijuma — korak po korak šta radiš kad dobiješ zadatak** |
 | **`VODIC_KOLOKVIJUM_JEDNOSTAVNO.md`** | **Kolokvijum — šta ide gde, TODO objašnjenja, gotov kod** |

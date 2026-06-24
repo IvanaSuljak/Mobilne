@@ -41,6 +41,7 @@ DOBIJEŠ ZADATAK
 | **3** | **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** | ako je slično kolokvijumu 2 — gotov kod **bez TODO** |
 | **4** | pojedinačni `SABLON_*.md` | samo za deo koji radiš (Retrofit, layout...) |
 | **?** | **`SABLON_TODO_RECNIK.md`** | ne znaš šta staviti umesto `TODO_...` |
+| **?** | **`SABLON_MAPA_KLASA.md`** | ne znaš u koju klasu ide koji kod |
 
 > **Ne otvaraj sve odjednom.** Korak 1 → 2 → onda **jedan** SABLON za deo koji trenutno kucaš.
 
