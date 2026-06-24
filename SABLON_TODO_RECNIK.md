@@ -308,6 +308,6 @@ Isti princip kao za dugme — zameni ID **svuda isto**. Switch listener logika o
 |------|--------|
 | `VODIC_DAN_KOLOKVIJUMA.md` | dan kolokvijuma — redosled |
 | `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md` | kolokvijum 2 **bez** TODO — gotov kod |
-| `SABLON_UNIVERZALNO_VS_KONKRETNO.md` | šta kopiraš vs menjaš |
+| `SABLON_TODO_RECNIK.md` | zamena TODO imena |
 
 > **Savet:** za kolokvijum 2 otvori **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** — tamo nema TODO, sve je već zamenjeno.

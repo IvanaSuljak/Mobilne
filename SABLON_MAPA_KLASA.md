@@ -170,4 +170,4 @@ Pre predaje pitaj za svaki deo koda:
 | `VODIC_DAN_KOLOKVIJUMA.md` | dan kolokvijuma + folder drvo |
 | `PRIprema_KOLOKVIJUM_2_KOMPLETNO.md` | gotov kod po fajlovima |
 | `SABLON_TODO_RECNIK.md` | zamena TODO imena |
-| `SABLON_UNIVERZALNO_VS_KONKRETNO.md` | šta kopiraš vs menjaš |
+| `SABLON_TODO_RECNIK.md` | zamena TODO imena |

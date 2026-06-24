@@ -361,7 +361,7 @@ Ne moraš razumeti Retrofit duboko — kopiraš obrazac.
 | GPS dozvole obrazac | koji senzor (gyro vs accel) |
 | FileProvider + file_paths | — |
 
-Detaljno: `SABLON_UNIVERZALNO_VS_KONKRETNO.md`
+Detaljno: u odgovarajućem `SABLON_*.md` za tu temu.
 
 ---
 
@@ -406,7 +406,7 @@ Detaljno: `SABLON_UNIVERZALNO_VS_KONKRETNO.md`
 | `SABLON_Senzori_Kamera.md` | kamera + senzori |
 | `SABLON_Lokacija_GoogleMaps.md` | GPS |
 | `SABLON_SQLite_...md` | baza + prefs + kontakti |
-| `SABLON_UNIVERZALNO_VS_KONKRETNO.md` | šta kopiraš vs menjaš |
+| `SABLON_TODO_RECNIK.md` | zamena TODO imena |
 
 ---
 

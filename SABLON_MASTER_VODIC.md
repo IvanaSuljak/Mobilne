@@ -42,13 +42,11 @@ Kad zadatak traži GPS + kameru + senzor, **ne lepiš cele KORAK blokove** — s
 
 ## UNIVERZALNO vs KONKRETNO — ceo projekat
 
-> Detaljno po svakom šablonu: **`SABLON_UNIVERZALNO_VS_KONKRETNO.md`**
-
 | UNIVERZALNO (kopiraj) | KONKRETNO (menjaj po zadatku) |
 |-----------------------|-------------------------------|
-| Struktura MainActivity, Gradle u Module :app, Manifest redosled | Layout ID-evi, dozvole koje trebaš, listener logika |
-| Obrazci: dozvole, launcher, SensorEventListener, Retrofit singleton | BASE_URL, JSON polja, tip senzora, SharedPreferences ključ |
-| `TODO` **nema** u kodu | `TODO_...` **mora** da se zameni |
+| Struktura MainActivity, Gradle u Module :app, Manifest redosled | Layout ID-evi, dozvole, listener logika |
+| Obrazci: dozvole, launcher, SensorEventListener, Retrofit singleton | BASE_URL, JSON polja, tip senzora — vidi odgovarajući `SABLON_*.md` i `SABLON_TODO_RECNIK.md` |
+| Nema `TODO` u kodu | `TODO_...` mora da se zameni |
 
 ---
 
@@ -280,7 +278,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 | **`VODIC_DAN_KOLOKVIJUMA.md`** | **Dan kolokvijuma — korak po korak šta radiš kad dobiješ zadatak** |
 | **`VODIC_KOLOKVIJUM_JEDNOSTAVNO.md`** | **Kolokvijum — šta ide gde, TODO objašnjenja, gotov kod** |
 | **`PRIprema_KOLOKVIJUM_2_KOMPLETNO.md`** | **Celo rešenje — svaka klasa + za koji zadatak** |
-| **`SABLON_UNIVERZALNO_VS_KONKRETNO.md`** | **Šta kopiraš bukvalno vs šta menjaš po zadatku** |
 | `SABLON_Layout_XML.md` | UI elementi u XML-u |
 | `SABLON_Lokacija_GoogleMaps.md` | GPS lat/lng + Google Maps |
 | `SABLON_Senzori_Kamera.md` | Senzori + kamera + FileProvider |

@@ -266,7 +266,7 @@ Na kolokvijumu skoro uvek **samo MainActivity**.
 | Samo layout | `SABLON_Layout_XML.md` |
 | Samo Retrofit | `SABLON_Retrofit_HTTP_Zahtevi.md` |
 | Layout nije „ispod drugog“ | `SABLON_Layout_XML.md` → sekcija „Ako NE piše jedno ispod drugog“ |
-| Šta kopiraš vs menjaš | `SABLON_UNIVERZALNO_VS_KONKRETNO.md` |
+| Šta kopiraš vs menjaš | u svakom `SABLON_*.md` + `SABLON_TODO_RECNIK.md` |
 
 **Ne čitaj sve odjednom** — otvori **jedan** fajl za **jedan** deo zadatka.
 

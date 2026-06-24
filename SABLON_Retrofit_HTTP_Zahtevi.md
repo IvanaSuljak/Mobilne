@@ -1,7 +1,7 @@
 # ŠABLON — Retrofit (HTTP zahtevi)
 
 > **MASTER:** Otvori prvo `SABLON_MASTER_VODIC.md` → nađi "Retrofit, HTTP, API" u tabeli.  
-> **Univerzalno vs konkretno:** `SABLON_UNIVERZALNO_VS_KONKRETNO.md` → sekcija Retrofit.
+> Svuda gde vidiš `TODO` → zameni (vidi `SABLON_TODO_RECNIK.md`). Ostalo kopiraš bukvalno.
 
 > Svuda gde vidiš `TODO` → zameni sa svojim podacima.
 > Sve ostalo kopiraš bukvalno.
