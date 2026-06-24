@@ -291,6 +291,11 @@ Isti princip kao za dugme — zameni ID **svuda isto**. Switch listener logika o
 | drugi JSON ključevi | polja u modelu + `@SerializedName` |
 | drugi ID dugmeta/TextView-a | layout + findViewById + field ime |
 | dugme **briše** | listener → `delete` / `obrisi...` |
+| briše **prvi** | `obrisiPrviPost()` → `ORDER BY id ASC LIMIT 1` |
+| briše **poslednji** | `obrisiPosledniPost()` → `ORDER BY id DESC LIMIT 1` |
+| briše **po ID** | `obrisiPoId(id)` → `WHERE id=?` |
+| čita **prvi** za Toast | `getPrviPost()` |
+| čita **poslednji** | `getPoslednjiPost()` |
 | dugme **kreira / dodaje** | listener → `insert` / `dodaj...` |
 | dugme **čuva** | listener → SharedPreferences |
 | HTTP POST umesto GET | `@POST` + `@Body` u ApiService |

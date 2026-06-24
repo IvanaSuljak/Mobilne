@@ -194,6 +194,7 @@ Obrazac ostaje isti; **tekst novog zadatka** kaže šta tačno menjaš.
 | Samo senzor (bez kamere) | Senzori KORAK 3 | tip senzora iz zadatka |
 | Shake detekcija | Senzori KORAK 4 | — |
 | Baza bez Retrofit-a | SQLite KORAK 1–2 | tabela/kolone iz zadatka |
+| Obriši **prvi** / **poslednji** / po ID | SQLite kolokvijum sekcija | `ASC` vs `DESC` u query |
 | Retrofit bez baze | Retrofit KORAK 1–5 A/B/C | — |
 | SharedPreferences bez baze | SQLite KORAK 3 | ključ iz zadatka |
 | Kontakti (prvi / svi) | SQLite KORAK 6 | query |

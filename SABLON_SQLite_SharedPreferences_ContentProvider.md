@@ -560,6 +560,45 @@ db.delete("postovi", "id=?", new String[]{String.valueOf(prvi.getId())});
 return true;
 ```
 
+### Prvi vs poslednji vs po ID — samo menjaš ORDER BY
+
+| Zadatak kaže | Metoda | SQL sort u `query()` |
+|--------------|--------|----------------------|
+| **prvi** u tabeli | `getPrviPost()` / `obrisiPrviPost()` | `"id ASC", "1"` |
+| **poslednji** u tabeli | `getPoslednjiPost()` / `obrisiPosledniPost()` | `"id DESC", "1"` |
+| **po ID=5** (npr. treći dodati) | `getPostById(5)` / `obrisiPoId(5)` | `WHERE id=?` |
+
+**Poslednji post — primer:**
+
+```java
+public Post getPoslednjiPost() {
+    SQLiteDatabase db = getReadableDatabase();
+    Cursor c = db.query(TABLE, null, null, null, null, null, "id DESC", "1");
+    // ... isto cursorToPost kao getPrviPost ...
+}
+
+public boolean obrisiPosledniPost() {
+    Post p = getPoslednjiPost();
+    if (p == null) return false;
+    getWritableDatabase().delete(TABLE, "id=?", new String[]{String.valueOf(p.getId())});
+    return true;
+}
+```
+
+U MainActivity listener samo zameni metodu:
+
+```java
+// prvi  → dbHelper.obrisiPrviPost()
+// poslednji → dbHelper.obrisiPosledniPost()
+obrisiButton.setOnClickListener(v -> {
+    if (!dbHelper.obrisiPosledniPost()) {
+        prikaziNotifikaciju("Nema više postova!");
+    }
+});
+```
+
+> **Obrazac isti** — menja se samo `ASC` ↔ `DESC` ili `WHERE id=?`.
+
 U MainActivity:
 ```java
 dbHelper = DatabaseHelper.getInstance(this);
